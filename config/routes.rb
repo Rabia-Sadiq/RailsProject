@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "/sign_up", to: "registrations#new"
   post "/sign_up", to: "registrations#create"
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create", as: :manual_login
+
   resource :registration, only: [:new, :create]
   resource :session
   resource :password_reset
