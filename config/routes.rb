@@ -3,12 +3,14 @@ Rails.application.routes.draw do
 
   
   get "up" => "rails/health#show", as: :rails_health_check
+  get "/sign_up", to: "registrations#new"
+  post "/sign_up", to: "registrations#create"
+  resource :registration, only: [:new, :create]
+  resource :session
+  resource :password_reset
+  resource :password
 
-  resourse: registration
-  resourse:session
-  resourse:password_reset
-  resourse:password
   
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "main#index"
 end
