@@ -1,0 +1,13 @@
+<h1>Your Personalized Color Palette</h1>
+<p>Based on your <%= @undertone.capitalize %> undertone, these are the most flattering colors for you:</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+  <% @color_palette.each do |name, hex| %>
+    <div style="width: 100px; height: 100px; background-color: <%= hex %>; border-radius: 8px; border: 2px solid #333; box-shadow: 2px 2px 4px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; text-align: center;">
+  <span style="color: white; font-weight: bold; text-shadow: 1px 1px 2px black;">
+    <%= name %>
+  </span>
+</div>
+
+  <% end %>
+</div>

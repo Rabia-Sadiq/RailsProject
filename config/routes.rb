@@ -9,11 +9,18 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create", as: :manual_login
   get "undertone_quiz", to: "undertone_quiz#show"
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
+  
+
   resource :registration, only: [ :new, :create ]
   resource :session
   resources :password_resets, only: [ :new, :create, :edit, :update ]
     resource :password
-
+    Rails.application.routes.draw do
+      resources :undertone_quiz, only: [:show] do
+        post :answer, on: :member
+      end
+      get 'palette', to: 'users#palette'
+    end
 
   # Defines the root path route ("/")
   root "main#index"

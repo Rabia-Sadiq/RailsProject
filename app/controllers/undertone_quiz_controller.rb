@@ -52,7 +52,7 @@ class UndertoneQuizController < ApplicationController
       session[:quiz_index] = nil
       session[:answers] = nil
 
-      redirect_to root_path, notice: "Quiz complete! Your undertone is #{undertone.capitalize}."
+      redirect_to palette_path, notice: "Quiz complete! Your undertone is #{undertone.capitalize}."
     else
       redirect_to undertone_quiz_path
     end
