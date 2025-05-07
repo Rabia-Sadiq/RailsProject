@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
     @user=User.new(registration_params)
     if @user.save
       login @user
-      redirect_to root_path, notice: "Signed up successfully!"
+      redirect_to undertone_quiz_path, notice: "Signed up successfully! Please take the undertone quiz."
     else
       render :new,status:unprocessable_entity
     end

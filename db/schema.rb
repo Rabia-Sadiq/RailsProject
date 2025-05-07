@@ -10,11 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_29_034800) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_07_100136) do
+  create_table "quizzes", force: :cascade do |t|
+    t.string "question"
+    t.string "option_1"
+    t.string "option_2"
+    t.string "option_3"
+    t.string "option_4"
+    t.string "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.integer "height"
+    t.integer "weight"
+    t.string "undertone"
   end
 end

@@ -1,0 +1,17 @@
+<h2>Undertone Quiz</h2>
+
+<p><strong>Question <%= @current_index + 1 %> of 7</strong></p>
+<p><%= @question[:question] %></p>
+
+<%= form_with url: "/undertone_quiz/answer", method: :post do %>
+  <% @question[:options].each do |opt| %>
+    <div>
+      <label>
+        <%= radio_button_tag :option, opt %>
+        <%= opt %>
+      </label>
+    </div>
+  <% end %>
+
+  <%= submit_tag "Next" %>
+<% end %>
