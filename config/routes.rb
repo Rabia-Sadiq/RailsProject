@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create", as: :manual_login
   get "undertone_quiz", to: "undertone_quiz#show"
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
-  
+  get 'users/favorites', to: 'users#favorites'
+  resources :favorite_colors, only: [:create, :index, :destroy]
 
   resource :registration, only: [ :new, :create ]
   resource :session

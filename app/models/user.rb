@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :favorite_colors, dependent: :destroy
 
   validates :email, presence: true ,uniqueness: { case_sensitive: false }
   normalizes :email, with: ->(email) { email.strip.downcase }

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_07_100136) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_07_144548) do
+  create_table "favorite_colors", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name"
+    t.string "hex"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_favorite_colors_on_user_id"
+  end
+
   create_table "quizzes", force: :cascade do |t|
     t.string "question"
     t.string "option_1"
@@ -32,4 +41,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_07_100136) do
     t.integer "weight"
     t.string "undertone"
   end
+
+  add_foreign_key "favorite_colors", "users"
 end

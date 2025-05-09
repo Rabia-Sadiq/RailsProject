@@ -131,4 +131,7 @@ class UsersController < ApplicationController
       {}
     end
   end
+  def favorites
+    @favorites = current_user.favorite_colors
+  end
 end

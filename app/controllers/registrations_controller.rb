@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
       login @user
       redirect_to undertone_quiz_path, notice: "Signed up successfully! Please take the undertone quiz."
     else
-      render :new,status:unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
