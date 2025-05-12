@@ -8,7 +8,7 @@ def create
       if user.undertone.blank?
         redirect_to undertone_quiz_path, notice: "Please take the undertone quiz to personalize your experience."
       else
-        redirect_to root_path, notice: "You have signed in successfully"
+        redirect_to palette_path, notice: "You have signed in successfully"
       end
     else
       flash[:alert] = "Invalid email or password"

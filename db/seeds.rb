@@ -1,79 +1,65 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
 require 'csv'
 require 'json'
 
+# --- Optional: Helper to detect brand from name or link ---
+# def detect_brand(name_or_link)
+#   str = name_or_link.to_s.downcase
+#   return 'Asim Jofa' if str.include?('asim jofa') || str.include?('aj')
+#   return 'Bonanza Satrangi' if str.include?('bonanza')
+#   return 'Khaadi' if str.include?('khaadi')
+#   'Unknown'
+# end
+
+# --- Optional: Clean price value to ensure it's numeric ---
+def clean_price(price_str)
+  price_str.to_s.gsub(/[^\d]/, '').to_i # "PKR 1,680" => 1680
+end
+
+# --- Optional: Clear old data before importing (uncomment if needed) ---
+# Product.destroy_all
+# Product.where(brand: 'Khaadi').destroy_all
+# Product.where(brand: 'Bonanza Satrangi').destroy_all
+
 # --- Import from khaadi.csv ---
+# khaadi_csv_path = Rails.root.join('db', 'khaadi.csv')
 
+# CSV.foreach(khaadi_csv_path, headers: true, encoding: 'UTF-8') do |row|
+#   begin
+#     folder_name = row['Img Path'].to_s.split('\\').last
+#     image_path = "/images/#{folder_name}/image_0.jpg"
 
-csv_path = Rails.root.join('db', 'khaadi.csv')
+#     Product.create!(
+#       title: row['Product Description'],
+#       description: row['Fabrics 3 Piece Suit'],
+#       price: clean_price(row['Price']),
+#       color: row['Color'],
+#       brand: 'Khaadi',
+#       link: row['Product Link'],
+#       image_url: image_path
+#     )
+#   rescue => e
+#     puts "❌ Failed to import row from khaadi.csv: #{e.message}"
+#   end
+# end
 
-CSV.foreach(csv_path, headers: true) do |row|
-  folder_name = row['Img Path'].split('\\').last # gets 'ALK231009'
+# puts "✅ Products from khaadi.csv imported!"
 
-  image_path = "/images/#{folder_name}/image_0.jpg"
+# --- Import from output2.csv ---
+output_csv_path = Rails.root.join('db', 'last0.csv')
 
-  Product.create!(
-    title: row['Product Description'],
-    description: row['Fabrics 3 Piece Suit'], # adjust if needed
-    price: row['Price'],
-    color: row['Color'],
-    brand: "Khaadi",
-    link: row['Product Link'],
-    image_url: image_path
-  )
+CSV.foreach(output_csv_path, headers: true, encoding: 'UTF-8') do |row|
+  begin
+    Product.create!(
+      title: row['Name'],
+      price: clean_price(row['Price']),
+      color: row['Color'],
+      image_url: row['Image'],
+      link: row['Link'],
+      brand: "Nishat"
+    )
+  rescue => e
+    puts "❌ Failed to import row from output2.csv: #{e.message}"
+  end
 end
 
-puts "✅ Products with images imported!"
-
-
-# --- Import from hm.csv ---
-puts "Importing H&M products..."
-CSV.foreach(Rails.root.join("db/hm.csv"), headers: true) do |row|
-  image_json = JSON.parse(row["image"].gsub("'", '"')) rescue []
-  image_url = "https:#{image_json[0]["src"]}" if image_json.any?
-
-  Product.create!(
-    title: row["title"],
-    description: row["sellingAttribute"],
-    price: row["price"],
-    color: row["color"] || "Unknown",
-    image_url: image_url,
-    brand: row["brandName"],
-    link: row["link"]
-  )
-end
-
-# --- Import from custom.csv ---
-puts "Importing long products..."
-CSV.foreach(Rails.root.join("db/long.csv"), headers: true) do |row|
-  Product.create!(
-    title: row["Product_Name"],
-    description: row["Details"],
-    price: row["Price"],
-    color: "Unknown",
-    image_url: row["Product_Image"],
-    brand: "Unknown",
-    link: row["Link"]
-  )
-end
-puts "Importing shirts products..."
-CSV.foreach(Rails.root.join("db/SHIRTS.csv"), headers: true) do |row|
-  Product.create!(
-    title: row["Product_Name"],
-    description: row["Details"],
-    price: row["Price"],
-    color: "Unknown",
-    image_url: row["Product_Image"],
-    brand: "Zara",
-    link: row["Link"]
-  )
-end
-puts "✅ All products imported!"
+puts "✅ Products from output0.csv imported!"

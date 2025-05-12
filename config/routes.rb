@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
   get 'users/favorites', to: 'users#favorites'
   resources :favorite_colors, only: [:create, :index, :destroy]
-
+  resources :products, only: [:index, :show]
   resource :registration, only: [ :new, :create ]
   resource :session
   resources :password_resets, only: [ :new, :create, :edit, :update ]
