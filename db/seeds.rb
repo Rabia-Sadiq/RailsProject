@@ -45,7 +45,7 @@ end
 # puts "✅ Products from khaadi.csv imported!"
 
 # --- Import from output2.csv ---
-output_csv_path = Rails.root.join('db', 'last0.csv')
+output_csv_path = Rails.root.join('db', 'nishat.csv')
 
 CSV.foreach(output_csv_path, headers: true, encoding: 'UTF-8') do |row|
   begin
