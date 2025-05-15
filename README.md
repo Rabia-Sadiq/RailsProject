@@ -58,3 +58,4 @@ Check out my supporting project used for data collection:
 📄 Fashion Brand Web Scrapers (Python + Selenium)
 This repo contains scripts that scrape product data (name, color, price, image, and link) from different Pakistani fashion brand websites.
 
+https://github.com/Rabia-Sadiq/MyScrappers
