@@ -2,7 +2,7 @@
 
 | Submission Phase | Tasks Completed | Completion |
 |------------------|------------------|------------|
-| ✅ **Submission 1** | 6 out of 9 (UI partially done, no tests yet) | **66.67% of 70%** |
+| ✅ **Submission 1** | 6 out of 9 (UI partially done, no filtering)| **66.67% of 70%** |
 | 🕒 **Submission 2** | 0 out of 4 | **0% of 30%** |
 
 > **🔢 Total Project Completion: 66.67%**
@@ -26,7 +26,6 @@
 - **UI Design:** Basic layout using grid for dresses; overall UI is still minimal and needs polish.
 - **Frontend Styling:** Tailwind used, but not fully structured or responsive.
 - **Responsiveness:** Mobile-friendly design is pending.
-- **Testing:** No automated tests added yet (authentication, quiz, etc.).
 
 ---
 
