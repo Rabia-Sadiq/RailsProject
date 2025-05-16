@@ -2,10 +2,11 @@
 
 | Submission Phase | Tasks Completed | Completion |
 |------------------|------------------|------------|
-| ✅ **Submission 1** | 6 out of 10 (UI partially done, no tests yet) | **60% of 70%** |
+| ✅ **Submission 1** | 6 out of 9 (UI partially done, no tests yet) | **66.67% of 70%** |
 | 🕒 **Submission 2** | 0 out of 4 | **0% of 30%** |
 
-> **🔢 Total Project Completion: 42%**
+> **🔢 Total Project Completion: 66.67%**
+> ** Remaining project: 33.33
 
 ---
 
