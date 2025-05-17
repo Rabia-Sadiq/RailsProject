@@ -2,8 +2,8 @@
 
 | Submission Phase | Tasks Completed | Completion |
 |------------------|------------------|------------|
-| ✅ **Submission 1** | 6 out of 9 (UI partially done, no filtering)| **66.67% of 70%** |
-| 🕒 **Submission 2** | 0 out of 4 | **0% of 30%** |
+| ✅ **Submission 1** | 7 out of 9 (UI partially done)| **77.77% of 70%** |
+| 🕒 **Submission 2** | 1 out of 4 | **25% of 30%** |
 
 > **🔢 Total Project Completion: 66.67%**
 > ** Remaining project: 33.33
@@ -11,13 +11,25 @@
 ---
 
 ## ✅ Completed Features
+User Authentication: Signup and login functionality implemented using Devise in Ruby on Rails.
 
-- **User Authentication:** Signup and Login using Devise in Ruby on Rails.
-- **Undertone Quiz:** Simple quiz implemented to determine the user's skin undertone.
-- **Color Palette Generator:** Personalized palette shown based on quiz results.
-- **Product Catalog:** Dresses shown in a grid layout and filtered by user’s color preference.
-- **Backend (Rails):** Models, controllers, and logic implemented.
-- **Database Design (PostgreSQL):** Tables created for users, products, quiz results, and palettes.
+Undertone Quiz: A simple quiz that determines the user's skin undertone.
+
+Color Palette Generator: Personalized color palette generated based on the quiz results.
+
+Product Catalog: Dresses displayed in a grid layout and filtered according to the user’s color preferences.
+
+Filtering and Sorting: Users can filter dresses by various criteria (price,brand) and sort products (by price).
+
+Favorite Dresses: Users can add dresses to their favorites and remove them from the favorites list.
+
+Backend (Rails): All necessary models, controllers, and business logic implemented to support the features.
+
+Database Design (PostgreSQL): Tables created for users, products, quiz results, palettes, and favorites.
+
+Testing: Automated tests added to verify key features like user signup/login, quiz functionality, filtering, product management, and favorite dress functionality work correctly and reliably.
+
+
 
 ---
 
@@ -32,7 +44,6 @@
 ## ❌ Not Yet Started (Submission 2 Tasks)
 
 - AI-based dress size recommendation (planned using OpenAI API with height/weight input).
-- Wishlist/Favorites feature.
 - Full application testing and bug fixing.
 - Deployment to Render or Heroku.
 
