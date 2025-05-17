@@ -1,6 +1,50 @@
 <h1 class="page-title">
   Products<%= " in #{params[:color].strip.titleize} (#{@products.count})" if params[:color].present? %>
 </h1>
+<%= form_with url: products_path, method: :get, local: true do %>
+  <%= hidden_field_tag :color, params[:color] %>
+
+  <div>
+    <label>Brand:</label>
+    <%= text_field_tag :brand, params[:brand] %>
+  </div>
+
+  <div>
+    <label>Description:</label>
+    <%= text_field_tag :description, params[:description] %>
+  </div>
+
+  <div>
+    <label>Min Price:</label>
+    <%= number_field_tag :min_price, params[:min_price] %>
+  </div>
+
+  <div>
+    <label>Max Price:</label>
+    <%= number_field_tag :max_price, params[:max_price] %>
+  </div>
+
+  <%= submit_tag 'Apply Filters' %>
+<% end %>
+<%= form_with url: products_path, method: :get, local: true do %>
+  <%= hidden_field_tag :color, params[:color] %>
+  <%= hidden_field_tag :brand, params[:brand] %>
+  <%= hidden_field_tag :description, params[:description] %>
+  <%= hidden_field_tag :min_price, params[:min_price] %>
+  <%= hidden_field_tag :max_price, params[:max_price] %>
+
+  <div>
+    <label>Sort By:</label>
+    <%= select_tag :sort_by, options_for_select([
+        ['Newest', 'newest'],
+        ['Oldest', 'oldest'],
+        ['Price: Low to High', 'price_asc'],
+        ['Price: High to Low', 'price_desc']
+      ], selected: params[:sort_by]) %>
+  </div>
+
+  <%= submit_tag 'Apply Sorting' %>
+<% end %>
 
 <% if @products.any? %>
   <div class="product-grid">
@@ -78,3 +122,28 @@
     background-color: #0056b3;
   }
 </style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const filterSelect = document.getElementById("filter-type");
+    const brandField = document.getElementById("brand-field");
+    const descriptionField = document.getElementById("description-field");
+    const priceField = document.getElementById("price-field");
+    const sortField = document.getElementById("sort-field");
+
+    filterSelect.addEventListener("change", function () {
+      const value = this.value;
+
+      // Hide all fields
+      brandField.style.display = "none";
+      descriptionField.style.display = "none";
+      priceField.style.display = "none";
+      sortField.style.display = "none";
+
+      // Show selected one
+      if (value === "brand") brandField.style.display = "block";
+      else if (value === "description") descriptionField.style.display = "block";
+      else if (value === "price") priceField.style.display = "block";
+      else if (value === "sort") sortField.style.display = "block";
+    });
+  });
+</script>
