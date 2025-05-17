@@ -1,0 +1,2 @@
+module FavoriteDressesHelper
+end

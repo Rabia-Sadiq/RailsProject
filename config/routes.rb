@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   get "undertone_quiz", to: "undertone_quiz#show"
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
   get 'users/favorites', to: 'users#favorites'
+  get 'product', to: 'products#index'
   resources :favorite_colors, only: [:create, :index, :destroy]
+  resources :favorite_dresses, only: [:create, :index, :destroy]
+  delete '/favorite_dresses/:product_id', to: 'favorite_dresses#destroy', as: 'remove_favorite_dress'
   resources :products, only: [:index, :show]
   resource :registration, only: [ :new, :create ]
   resource :session

@@ -1,0 +1,18 @@
+<h2>Your Favorite Dresses</h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+  <% @favorite_dresses.each do |favorite| %>
+    <% product = favorite.product %>
+    <div style="border: 1px solid #ccc; padding: 10px; width: 200px;">
+      <% if product.image_url.present? %>
+        <%= image_tag favorite.product.image_url, style: "width: 100%;" %>
+      <% end %>
+      <h4><%= favorite.product.title %></h4>
+      <p><strong>Brand:</strong> <%= favorite.product.brand %></p>
+      <p><strong>Color:</strong> <%= favorite.product.color %></p>
+      <p><strong>Price:</strong> PKR <%= number_with_delimiter(favorite.product.price, delimiter: ',') %></p>
+
+<%= button_to "❌ Remove", favorite_dress_path(favorite), method: :delete, data: { confirm: "Remove this dress?" } %>
+    </div>
+  <% end %>
+</div>

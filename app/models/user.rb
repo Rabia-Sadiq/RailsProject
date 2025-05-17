@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :favorite_colors, dependent: :destroy
+  has_many :favorite_dresses
+  has_many :favorited_products, through: :favorite_dresses, source: :product
 
   validates :email, presence: true ,uniqueness: { case_sensitive: false }
   normalizes :email, with: ->(email) { email.strip.downcase }

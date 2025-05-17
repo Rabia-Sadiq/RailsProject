@@ -59,9 +59,15 @@
         <% if product.link.present? %>
           <%= link_to "View Product", product.link, target: "_blank", class: 'view-product-link' %>
         <% end %>
+        <%= button_to "❤️ Favorite", favorite_dresses_path(product_id: product.id), method: :post %>
+
       </div>
+     
+
     <% end %>
   </div>
+  <%= link_to "My Favorite Dresses", favorite_dresses_path %>
+
 <% else %>
   <p>No products found for this color.</p>
 <% end %>
