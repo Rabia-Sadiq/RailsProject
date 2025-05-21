@@ -3,7 +3,7 @@
 | Submission Phase | Tasks Completed | Completion |
 |------------------|------------------|------------|
 | ✅ **Submission 1** | 7 out of 9 (UI partially done)| **77.77% of 70%** |
-| 🕒 **Submission 2** | 1 out of 4 | **25% of 30%** |
+| 🕒 **Submission 2** | 2 out of 4 | **25% of 30%** |
 
 > **🔢 Total Project Completion: 66.67%**
 > ** Remaining project: 33.33
@@ -29,6 +29,10 @@ Database Design (PostgreSQL): Tables created for users, products, quiz results, 
 
 Testing: Automated tests added to verify key features like user signup/login, quiz functionality, filtering, product management, and favorite dress functionality work correctly and reliably.
 
+- AI-Powered Chatbot Stylist using local model (no external API pressure)
+- Mood-based outfit suggestion UI (basic version)
+- 🌤️ Weather-based Outfit of the Day (OOTD) – suggests colors and outfits based on current weather in user’s city
+
 
 
 ---
@@ -43,7 +47,6 @@ Testing: Automated tests added to verify key features like user signup/login, qu
 
 ## ❌ Not Yet Started (Submission 2 Tasks)
 
-- AI-based dress size recommendation (planned using OpenAI API with height/weight input).
 - Full application testing and bug fixing.
 - Deployment to Render or Heroku.
 
