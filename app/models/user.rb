@@ -1,20 +1,12 @@
 class User < ApplicationRecord
-  has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+  
   has_many :favorite_colors, dependent: :destroy
   has_many :favorite_dresses
   has_many :favorited_products, through: :favorite_dresses, source: :product
 
-  validates :email, presence: true ,uniqueness: { case_sensitive: false }
-  normalizes :email, with: ->(email) { email.strip.downcase }
-  def email=(value)
-    super(value.strip.downcase)
-  end
-
-  generates_token_for  :password_reset,expires_in: 15.minutes do
-    password_salt&.last(10)
-
-  end
-  generates_token_for :email_confirmation,expires_in: 24.minutes do
-    email
-  end
+ 
 end

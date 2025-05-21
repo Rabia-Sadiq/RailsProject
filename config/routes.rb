@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get "home/index"
+  devise_for :users, controllers: {
+  registrations: 'users/registrations'
+}
 
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root to: 'home#index'
 
   get "up" => "rails/health#show", as: :rails_health_check
-  get "/sign_up", to: "registrations#new"
-  post "/sign_up", to: "registrations#create"
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create", as: :manual_login
+
   get "undertone_quiz", to: "undertone_quiz#show"
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
   get 'users/favorites', to: 'users#favorites'
@@ -15,11 +17,10 @@ Rails.application.routes.draw do
   resources :favorite_dresses, only: [:create, :index, :destroy]
   delete '/favorite_dresses/:product_id', to: 'favorite_dresses#destroy', as: 'remove_favorite_dress'
   resources :products, only: [:index, :show]
-  resource :registration, only: [ :new, :create ]
-  resource :session
-  resources :password_resets, only: [ :new, :create, :edit, :update ]
-    resource :password
+
     Rails.application.routes.draw do
+  get "home/index"
+ 
       resources :undertone_quiz, only: [:show] do
         post :answer, on: :member
       end
@@ -27,5 +28,5 @@ Rails.application.routes.draw do
     end
 
   # Defines the root path route ("/")
-  root "main#index"
+  
 end
