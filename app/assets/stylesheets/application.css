@@ -8,3 +8,33 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-message {
+  align-self: flex-end;
+  max-width: 75%;
+}
+
+.bot-message {
+  align-self: flex-start;
+  max-width: 75%;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 15px;
+  margin: 5px 0;
+}
+
+.message-bubble.user {
+  background-color: #007bff;
+  color: white;
+}
+
+.message-bubble.bot {
+  background-color: #f1f0f0;
+  color: #333;
+}

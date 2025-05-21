@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="mb-0">Style Assistant</h3>
+        </div>
+        
+        <div class="card-body chat-container" style="height: 400px; overflow-y: auto;" id="chat-messages">
+          <% if @messages.empty? %>
+            <div class="bot-message mb-3">
+              <div class="message-bubble">
+                <p>Hello! I'm your personal stylist assistant. I can help you with:</p>
+                <ul>
+                  <li>Finding your best size based on height and weight</li>
+                  <li>Recommending colors that match your skin undertone</li>
+                  <li>Providing styling tips for different occasions</li>
+                </ul>
+                <p>How can I help you today?</p>
+              </div>
+            </div>
+          <% else %>
+            <%= render partial: 'message', collection: @messages %>
+          <% end %>
+        </div>
+        
+        <div class="card-footer">
+          <%= form_with url: create_chat_bot_path, method: :post, data: { controller: "chat-form" } do |form| %>
+            <div class="input-group">
+              <%= form.text_field :message, class: "form-control", placeholder: "Ask about colors or sizes...", required: true %>
+              <div class="input-group-append">
+                <%= form.submit "Send", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Scroll to bottom of chat on load
+  document.addEventListener('DOMContentLoaded', function() {
+    const chatContainer = document.getElementById('chat-messages');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  });
+</script>

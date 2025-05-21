@@ -1,0 +1,24 @@
+<%= turbo_stream.append "chat-messages" do %>
+  <%= render partial: 'message', object: current_user.chat_messages.where(is_from_bot: false).last %>
+<% end %>
+
+<%= turbo_stream.append "chat-messages" do %>
+  <%= render partial: 'message', object: @bot_message %>
+<% end %>
+
+<%= turbo_stream.replace "new_message_form" do %>
+  <%= form_with url: create_chat_bot_path, method: :post, id: "new_message_form", data: { controller: "chat-form" } do |form| %>
+    <div class="input-group">
+      <%= form.text_field :message, class: "form-control", placeholder: "Ask about colors or sizes...", required: true %>
+      <div class="input-group-append">
+        <%= form.submit "Send", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<script>
+  // Scroll to bottom of chat
+  const chatContainer = document.getElementById('chat-messages');
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+</script>

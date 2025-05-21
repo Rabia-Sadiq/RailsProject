@@ -45,7 +45,7 @@ end
 # puts "✅ Products from khaadi.csv imported!"
 
 # --- Import from output2.csv ---
-output_csv_path = Rails.root.join('db', 'long.csv')
+output_csv_path = Rails.root.join('db', 'SHIRTS.csv')
 
 CSV.foreach(output_csv_path, headers: true, encoding: 'UTF-8') do |row|
   begin
@@ -55,7 +55,7 @@ CSV.foreach(output_csv_path, headers: true, encoding: 'UTF-8') do |row|
       color: "Not Available",
       image_url: row['Product_Image'],
       link: row['Link'],
-      brand: "Zara"
+      brand: "Beech-Tree"
     )
   rescue => e
     puts "❌ Failed to import row from output2.csv: #{e.message}"
