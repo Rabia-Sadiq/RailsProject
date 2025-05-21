@@ -36,4 +36,37 @@ class ProductsController < ApplicationController
     @products = @products.order(price: :desc)
    end
   end
+  def ootd
+  city = params[:city] || "Lahore"
+  weather = fetch_weather(city)
+
+  temp = weather["main"]["temp"]
+  condition = weather["weather"].first["main"].downcase
+
+  light_colors = ["white", "peach", "mint", "sky blue"]
+  dark_colors = ["navy", "maroon", "brown", "dark green"]
+
+  colors = case condition
+           when "clear", "sunny"
+             light_colors
+           when "rain", "clouds", "drizzle"
+             dark_colors
+           else
+             temp < 20 ? dark_colors : light_colors
+           end
+
+  @product = Product.where(color: colors).order("RANDOM()").first
+  @weather_data = { city: city, temp: temp, condition: condition.capitalize }
+end
+
+private
+
+def fetch_weather(city)
+  api_key = ENV['OPENWEATHER_API_KEY']
+# Store in .env or credentials
+  url = URI("https://api.openweathermap.org/data/2.5/weather?q=#{city}&appid=#{api_key}&units=metric")
+  response = Net::HTTP.get(url)
+  JSON.parse(response)
+end
+
 end

@@ -1,0 +1,16 @@
+<h2>Weather-Based Outfit of the Day</h2>
+
+<%= form_with url: ootd_path, method: :get do %>
+  <%= label_tag :city, "Enter your city:" %>
+  <%= text_field_tag :city, params[:city] || "Lahore" %>
+  <%= submit_tag "Get OOTD" %>
+<% end %>
+
+<% if @product %>
+  <h3><%= @weather_data[:city] %>: <%= @weather_data[:condition] %>, <%= @weather_data[:temp] %>°C</h3>
+  <p>Try this <strong><%= @product.color %></strong> outfit today!</p>
+  <%= image_tag @product.image_url, width: 300 if @product.image_url.present? %>
+  <p><%= @product.title %></p>
+<% elsif params[:city] %>
+  <p>No matching outfits found for this weather.</p>
+<% end %>
