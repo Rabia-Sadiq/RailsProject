@@ -8,9 +8,15 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
- @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 .chat-container {
   display: flex;
   flex-direction: column;
