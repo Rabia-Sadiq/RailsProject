@@ -5,13 +5,18 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
   registrations: 'users/registrations'
 }
+Rails.application.routes.draw do
+  root 'home#index'
+ get "undertone_quiz", to: "undertone_quiz#show"
+end
+ get 'about', to:'home#about'
  get 'ootd', to: 'products#ootd'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  root to: 'home#index'
+  # root to: 'home#index'
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get "undertone_quiz", to: "undertone_quiz#show"
+  
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
   get 'users/favorites', to: 'users#favorites'
   get 'product', to: 'products#index'
