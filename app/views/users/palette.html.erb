@@ -1,22 +1,70 @@
-<h1>Your Personalized Color Palette</h1>
-<p>Based on your <%= @undertone.capitalize %> undertone, these are the most flattering colors for you:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Personalized Color Palette</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fdf6e3;
+      font-family: 'Georgia', serif;
+      color: #4b3f30;
+    }
+    .text-shadow {
+      text-shadow: 1px 1px 2px black;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-8">
+<nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Color&Fit</a>
+            <ul class="nav-menu">
+          <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link " %></li>
+          <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Quiz", undertone_quiz_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "OOTD", ootd_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "WishList", favorite_dresses_path, class: "nav-link" %></li>
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
-  <% @color_palette.each do |name, hex| %>
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      
-      <!-- Color Box with Link to Filtered Products -->
-      <div style="width: 100px; height: 100px; background-color: <%= hex %>; border-radius: 8px; border: 2px solid #333; box-shadow: 2px 2px 4px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
-        <%= link_to name, products_path(color: name.parameterize), style: "color: white; text-decoration: none; font-weight: bold; text-shadow: 1px 1px 2px black;" %>
-      </div>
+          <li class="nav-item"><%= link_to "Profile", profile_path, class: "nav-link" %></li>
+          <li class="nav-item">
+  <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link active", form_class: "d-inline" %>
+          </li>
 
-      <!-- Favorite Button -->
-      <%= button_to "❤️", favorite_colors_path(name: name, hex: hex), method: :post, class: "favorite-button", form_class: "inline-form", style: "margin-top: 5px;" %>
+          </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+  <div class="max-w-5xl mx-auto bg-white bg-opacity-80 border-4 border-yellow-800 rounded-xl shadow-lg p-10">
+    <h1 class="text-3xl font-bold mb-4 text-center">Your Personalized Color Palette</h1>
+    <p class="text-lg text-center mb-6">Based on your <%= @undertone.capitalize %> undertone, these are the most flattering colors for you:</p>
+
+    <div class="flex flex-wrap justify-center gap-6">
+      <% @color_palette.each do |name, hex| %>
+        <div class="flex flex-col items-center space-y-2">
+          <!-- Color Box with Link -->
+          <%= link_to products_path(color: name.parameterize), style: "text-decoration: none;" do %>
+            <div class="w-24 h-24 rounded-lg border-2 border-yellow-700 shadow-lg flex items-center justify-center"
+                 style="background-color: <%= hex %>;">
+              <span class="text-white font-bold text-shadow"><%= name %></span>
+            </div>
+          <% end %>
+
+          <!-- Favorite Button -->
+          <%= button_to "❤️", favorite_colors_path(name: name, hex: hex), method: :post,
+                class: "bg-yellow-100 text-white px-3 py-1 rounded-md hover:bg-blue-100 transition duration-200",
+                form_class: "inline-form" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
 
-  <!-- View Favorites Button -->
-  <div style="width: 100%; margin-top: 30px;">
-    <%= link_to "View Favorite Colors", favorite_colors_path, class: "btn", style: "padding: 10px 20px; background-color: #333; color: white; text-decoration: none; border-radius: 5px;" %>
+    <!-- View Favorites Button -->
+    <div class="text-center mt-10">
+      <%= link_to "View Favorite Colors", favorite_colors_path,
+            class: "inline-block bg-green-800 hover:bg-green-900 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-200" %>
+    </div>
   </div>
-</div>
+
+</body>
+</html>

@@ -1,157 +1,248 @@
+
+<nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Color&Fit</a>
+            <ul class="nav-menu">
+          <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link " %></li>
+          <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Quiz", undertone_quiz_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "OOTD", ootd_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "WishList", favorite_dresses_path, class: "nav-link" %></li>
+
+          <li class="nav-item"><%= link_to "Profile", profile_path, class: "nav-link" %></li>
+ <li class="nav-item">
+  <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link active", form_class: "d-inline" %>
+          </li>
+          </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
 <h1 class="page-title">
-  Products<%= " in #{params[:color].strip.titleize} (#{@products.count})" if params[:color].present? %>
+  Products<%= " in #{params[:color].strip.titleize} " if params[:color].present? %>
 </h1>
-<%= link_to "Smart OOTD", ootd_path, class: "nav-link" %>
 
-<%= form_with url: products_path, method: :get, local: true do %>
-  <%= hidden_field_tag :color, params[:color] %>
+<!-- FILTER + SORT -->
+<div class="controls-container">
+  <!-- Filter Panel -->
+  <details class="control-panel">
+    <summary>🔍 Filter Products</summary>
+    <%= form_with url: products_path, method: :get, local: true do %>
+      <%= hidden_field_tag :color, params[:color] %>
 
-  <div>
-    <label>Brand:</label>
-    <%= text_field_tag :brand, params[:brand] %>
-  </div>
-
-  <div>
-    <label>Description:</label>
-    <%= text_field_tag :description, params[:description] %>
-  </div>
-
-  <div>
-    <label>Min Price:</label>
-    <%= number_field_tag :min_price, params[:min_price] %>
-  </div>
-
-  <div>
-    <label>Max Price:</label>
-    <%= number_field_tag :max_price, params[:max_price] %>
-  </div>
-
-  <%= submit_tag 'Apply Filters' %>
-<% end %>
-<%= form_with url: products_path, method: :get, local: true do %>
-  <%= hidden_field_tag :color, params[:color] %>
-  <%= hidden_field_tag :brand, params[:brand] %>
-  <%= hidden_field_tag :description, params[:description] %>
-  <%= hidden_field_tag :min_price, params[:min_price] %>
-  <%= hidden_field_tag :max_price, params[:max_price] %>
-
-  <div>
-    <label>Sort By:</label>
-    <%= select_tag :sort_by, options_for_select([
-        ['Newest', 'newest'],
-        ['Oldest', 'oldest'],
-        ['Price: Low to High', 'price_asc'],
-        ['Price: High to Low', 'price_desc']
-      ], selected: params[:sort_by]) %>
-  </div>
-
-  <%= submit_tag 'Apply Sorting' %>
-<% end %>
-
-<% if @products.any? %>
-  <div class="product-grid">
-    <% @products.each do |product| %>
-      <div class="product-card">
-        <%= image_tag product.image_url, class: 'product-image' if product.image_url.present? %>
-        <h4 class="product-title"><%= product.title %></h4>
-        <p><strong>Brand:</strong> <%= product.brand %></p>
-        <p><strong>Color:</strong> <%= product.color %></p>
-        <p><strong>Price:</strong> PKR <%= number_to_currency(product.price) %></p>
-
-        <% if product.link.present? %>
-          <%= link_to "View Product", product.link, target: "_blank", class: 'view-product-link' %>
-        <% end %>
-        <%= button_to "❤️ Favorite", favorite_dresses_path(product_id: product.id), method: :post %>
-
+      <div class="form-group">
+        <label>Brand</label>
+        <%= text_field_tag :brand, params[:brand], class: "input-field" %>
       </div>
-     
 
+      <div class="form-group">
+        <label>Description</label>
+        <%= text_field_tag :description, params[:description], class: "input-field" %>
+      </div>
+
+      <div class="form-group">
+        <label>Min Price</label>
+        <%= number_field_tag :min_price, params[:min_price], class: "input-field" %>
+      </div>
+
+      <div class="form-group">
+        <label>Max Price</label>
+        <%= number_field_tag :max_price, params[:max_price], class: "input-field" %>
+      </div>
+
+      <%= submit_tag 'Apply Filters', class: 'btn-submit' %>
     <% end %>
-  </div>
-  <%= link_to "My Favorite Dresses", favorite_dresses_path %>
+  </details>
 
-<% else %>
-  <p>No products found for this color.</p>
-<% end %>
+  <!-- Sort Panel -->
+  <details class="control-panel">
+    <summary>↕️ Sort Products</summary>
+    <%= form_with url: products_path, method: :get, local: true do %>
+      <%= hidden_field_tag :color, params[:color] %>
+      <%= hidden_field_tag :brand, params[:brand] %>
+      <%= hidden_field_tag :description, params[:description] %>
+      <%= hidden_field_tag :min_price, params[:min_price] %>
+      <%= hidden_field_tag :max_price, params[:max_price] %>
 
+      <div class="form-group">
+        <label>Sort by</label>
+        <%= select_tag :sort_by, options_for_select([
+            ['Newest', 'newest'],
+            ['Oldest', 'oldest'],
+            ['Price: Low to High', 'price_asc'],
+            ['Price: High to Low', 'price_desc']
+          ], selected: params[:sort_by]), class: "input-field" %>
+      </div>
+
+      <%= submit_tag 'Apply Sorting', class: 'btn-submit' %>
+    <% end %>
+  </details>
+</div>
+
+<!-- PRODUCTS GRID -->
+<div class="products-grid">
+  <% @products.each do |product| %>
+    <% next if product.image_url.blank? || product.image_url.downcase.include?("not found") %>
+    <div class="product-card">
+      <%= image_tag product.image_url, alt: product.title, class: "product-img" %>
+      <h2><%= product.title %></h2>
+      <p><strong>Brand:</strong> <%= product.brand %></p>
+      <p><strong>Color:</strong> <%= product.color %></p>
+      <p><strong>Price:</strong> Rs. <%= product.price %></p>
+      <%= link_to "View", product_path(product), class: "btn-view" %>
+      <!-- Favourite Button -->
+      <%= button_to "❤️ Favorite", favorite_dresses_path(product), method: :post, class: "btn-favorite" %>
+    </div>
+  <% end %>
+  <%= link_to "My Favorites", favorite_dresses_path %>
+
+</div>
+
+<!-- STYLES -->
 <style>
+  body {
+    font-family: 'Georgia', serif;
+    background-color: #f8f4e3;
+    color: #4b3f2f;
+  }
+  h2{
+    font-weight:bold;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
   .page-title {
-    font-size: 2em;
+    font-size: 36px;
+    margin: 20px 0;
+    padding: 0.5em;
+    font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+    background: #fdf6e3;
+    border: 2px dashed #d2b48c;
+    border-radius: 10px;
+    font-family: 'Georgia', serif;
   }
 
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  .controls-container {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    padding: 0 20px;
+    width: 50%;
+    background: #fff8e7;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  details.control-panel {
+    border: 2px solid #e2c097;
+    border-radius: 10px;
+    padding: 12px;
+    background-color: #fcf6e3;
+  }
+
+  details summary {
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 18px;
+    color: #5a4228;
+  }
+
+  .form-group {
+    margin-top: 12px;
+  }
+
+  label {
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #c2a97c;
+    background: #fffaf3;
+    font-family: 'Georgia', serif;
+  }
+
+  .btn-submit {
+    margin-top: 12px;
+    background: #b08968;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+  }
+
+  .btn-submit:hover {
+    background: #8c6b50;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
   }
 
   .product-card {
-    border: 1px solid #ccc;
+    background: #fffaf3;
+    border: 1px solid #e0d2b8;
     padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    border-radius: 10px;
     text-align: center;
-    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Georgia', serif;
   }
 
   .product-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   }
 
-  .product-image {
-    width: 180px;
-    height: 200px;
+  .product-img {
+    width: 100%;
+    height: 250px;
     object-fit: cover;
-    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #d3c2aa;
   }
 
-  .product-title {
-    font-size: 1.1em;
-    color: #333;
-    margin: 10px 0;
-  }
-
-  .view-product-link {
+  .btn-view {
     display: inline-block;
-    background-color: #007bff;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 5px;
+    margin-top: 10px;
+    padding: 6px 14px;
+    background-color: #6b705c;
+    color: white;
     text-decoration: none;
-    margin-top: 15px;
+    border-radius: 6px;
+    font-weight: bold;
   }
 
-  .view-product-link:hover {
-    background-color: #0056b3;
+  .btn-view:hover {
+    background-color: #4a4e38;
+  }
+
+  .btn-favorite {
+    margin-top: 10px;
+    background-color: #e07a5f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+  }
+
+  .btn-favorite:hover {
+    background-color: #b55b48;
   }
 </style>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const filterSelect = document.getElementById("filter-type");
-    const brandField = document.getElementById("brand-field");
-    const descriptionField = document.getElementById("description-field");
-    const priceField = document.getElementById("price-field");
-    const sortField = document.getElementById("sort-field");
-
-    filterSelect.addEventListener("change", function () {
-      const value = this.value;
-
-      // Hide all fields
-      brandField.style.display = "none";
-      descriptionField.style.display = "none";
-      priceField.style.display = "none";
-      sortField.style.display = "none";
-
-      // Show selected one
-      if (value === "brand") brandField.style.display = "block";
-      else if (value === "description") descriptionField.style.display = "block";
-      else if (value === "price") priceField.style.display = "block";
-      else if (value === "sort") sortField.style.display = "block";
-    });
-  });
-</script>

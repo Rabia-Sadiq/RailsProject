@@ -1,16 +1,173 @@
-<h2>Weather-Based Outfit of the Day</h2>
 
-<%= form_with url: ootd_path, method: :get do %>
-  <%= label_tag :city, "Enter your city:" %>
-  <%= text_field_tag :city, params[:city] || "Lahore" %>
-  <%= submit_tag "Get OOTD" %>
-<% end %>
+<nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Color&Fit</a>
+            <ul class="nav-menu">
+          <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link " %></li>
+          <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Quiz", undertone_quiz_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "OOTD", ootd_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "WishList", favorite_dresses_path, class: "nav-link" %></li>
 
-<% if @product %>
-  <h3><%= @weather_data[:city] %>: <%= @weather_data[:condition] %>, <%= @weather_data[:temp] %>°C</h3>
-  <p>Try this <strong><%= @product.color %></strong> outfit today!</p>
-  <%= image_tag @product.image_url, width: 300 if @product.image_url.present? %>
-  <p><%= @product.title %></p>
-<% elsif params[:city] %>
-  <p>No matching outfits found for this weather.</p>
-<% end %>
+          <li class="nav-item"><%= link_to "Profile", profile_path, class: "nav-link" %></li>
+ <li class="nav-item">
+  <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link active", form_class: "d-inline" %>
+          </li></li>
+
+          </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+<section class="ootd-section themed-container ">
+  <style>
+    .themed-container {
+      background-color: #f8f4e3;  /* Soft vintage cream */
+      border: 2px solid #d7c49e;  /* Warm beige border */
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 50%;
+      margin: 20px auto;
+      font-family: 'Georgia', serif; /* Elegant serif font */
+      color: #5a4a24; /* Dark warm brown */
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .ootd-title {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .ootd-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      padding: 8px 12px;
+      border: 1.5px solid #d7c49e;
+      border-radius: 6px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: #b38b4c;
+      outline: none;
+    }
+
+    .form-submit {
+      background-color: #b38b4c;
+      color: white;
+      font-weight: 600;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-submit:hover {
+      background-color: #a07c3d;
+    }
+
+    .ootd-result {
+      text-align: center;
+    }
+
+    .weather-info {
+      font-size: 1.3em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .weather-condition {
+      font-style: italic;
+      color: #926f34;
+    }
+
+    .weather-temp {
+      color: #b38b4c;
+      font-weight: bold;
+    }
+
+    .ootd-suggestion {
+      font-size: 1.1em;
+      margin-bottom: 12px;
+    }
+
+    .product-color {
+      text-transform: capitalize;
+      color: #7f5f1a;
+    }
+
+    .ootd-image-wrapper {
+      margin-bottom: 12px;
+    }
+
+    .ootd-image {
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(127, 95, 26, 0.3);
+      margin:auto;
+    }
+
+    .product-title {
+      font-style: italic;
+      font-size: 1.1em;
+      color: #4a3a10;
+    }
+
+    .no-outfit-message {
+      text-align: center;
+      font-weight: 500;
+      color: #8c7a4a;
+      font-style: italic;
+    }
+  </style>
+
+  <h2 class="ootd-title">Weather-Based Outfit of the Day</h2>
+
+  <%= form_with url: ootd_path, method: :get, html: { class: "ootd-form" } do %>
+    <div class="form-group">
+      <%= label_tag :city, "Enter your city:", class: "form-label" %>
+      <%= text_field_tag :city, params[:city] || "Lahore", class: "form-input", placeholder: "e.g. Lahore" %>
+    </div>
+    <%= submit_tag "Get OOTD", class: "form-submit" %>
+  <% end %>
+
+  <% if @product %>
+    <div class="ootd-result">
+      <h3 class="weather-info">
+        <%= @weather_data[:city] %>:
+        <span class="weather-condition"><%= @weather_data[:condition] %></span>,
+        <span class="weather-temp"><%= @weather_data[:temp] %>°C</span>
+      </h3>
+      <p class="ootd-suggestion">
+        Try this <strong class="product-color"><%= @product.color %></strong> outfit today!
+      </p>
+      <% if @product.image_url.present? %>
+        <div class="ootd-image-wrapper">
+          <%= image_tag @product.image_url, width: 300, alt: @product.title, class: "ootd-image" %>
+        </div>
+      <% end %>
+      <p class="product-title"><%= @product.title %></p>
+    </div>
+  <% elsif params[:city] %>
+    <p class="no-outfit-message">No matching outfits found for this weather.</p>
+  <% end %>
+</section>

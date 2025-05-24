@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   root 'home#index'
  get "undertone_quiz", to: "undertone_quiz#show"
 end
+# config/routes.rb
+resource :profile, only: [:show, :update]
+
  get 'about', to:'home#about'
  get 'ootd', to: 'products#ootd'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -16,7 +19,13 @@ end
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  
+  get 'question1', to:"undertone_quiz#q1"
+  get 'question2', to:"undertone_quiz#q2"
+  get 'question3', to:"undertone_quiz#q3"
+  get 'question4', to:"undertone_quiz#q4"
+  get 'question5', to:"undertone_quiz#q5"
+  get 'question6', to:"undertone_quiz#q6"
+  get 'question7', to:"undertone_quiz#q7"
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
   get 'users/favorites', to: 'users#favorites'
   get 'product', to: 'products#index'

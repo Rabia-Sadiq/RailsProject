@@ -1,99 +1,675 @@
-<nav class="bg-white shadow-lg rounded-b-xl font-sans">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-      
-      <!-- Logo -->
-      <div class="flex-shrink-0">
-        <%= link_to "Color&Fit", root_path, class: "text-3xl font-bold text-indigo-600 tracking-tight italic" %>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
 
-      <!-- Desktop Menu -->
-      <div class="hidden md:flex space-x-8 items-end text-base tracking-wide font-medium">
-        <%= link_to "Home", root_path, class: "text-gray-700 hover:text-indigo-600 transition duration-200" %>
-        <%= link_to "About", about_path, class: "text-gray-700 hover:text-indigo-600 transition duration-200" %>
-        <%= link_to "Quiz", undertone_quiz_path, class: "text-gray-700 hover:text-indigo-600 transition duration-200" %>
-        <%= link_to "OOTD", ootd_path, class: "text-gray-700 hover:text-indigo-600 transition duration-200" %>
-        <%= link_to "Favorites", favorite_dresses_path, class: "text-gray-700 hover:text-indigo-600 transition duration-200" %>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Fashion Stylist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        <!-- Auth Buttons -->
-        <%= link_to "Log In", new_user_session_path,
-            class: "bg-white border border-indigo-600 text-indigo-600 px-4 py-1.5 rounded-lg shadow-sm hover:bg-indigo-50 transition duration-200" %>
-        <%= link_to "Sign Up", new_user_registration_path,
-            class: "bg-white border border-indigo-600 text-indigo-600 px-4 py-1.5 rounded-lg shadow-sm hover:bg-indigo-50 transition duration-200" %>
-      </div>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fefcff 0%, #faf7fb 50%, #ffffff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-      <!-- Profile Icon -->
-      <div class="hidden md:flex items-center">
-        <%= link_to favorite_dresses_path do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-     stroke-width="1.5" stroke="currentColor"
-     class="w-8 h-8 text-indigo-600 hover:scale-105 transition">
-  <path stroke-linecap="round" stroke-linejoin="round"
-        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-  <path stroke-linecap="round" stroke-linejoin="round"
-        d="M4.5 20.25a8.25 8.25 0 0115 0" />
-</svg>
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-        <% end %>
-      </div>
+        .color-swatch {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
 
-      <!-- Mobile Menu Button -->
-      <div class="md:hidden">
-        <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
+        .swatch-1 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #f5d0dd, #e4a5c1);
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .swatch-2 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            top: 25%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .swatch-3 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #c4b5fd, #a78bfa);
+            bottom: 20%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        .swatch-4 {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #34d399, #10b981);
+            top: 60%;
+            right: 8%;
+            animation-delay: 1s;
+        }
+
+        .floral-pattern {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(212, 168, 190, 0.3);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .flower-1 {
+            top: 10%;
+            right: 25%;
+            animation-delay: 0s;
+        }
+
+        .flower-2 {
+            bottom: 15%;
+            right: 30%;
+            animation-delay: 3s;
+        }
+
+        .flower-3 {
+            top: 45%;
+            left: 8%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 168, 190, 0.2);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #be185d;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #9f1239;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #be185d;
+            background: rgba(212, 168, 190, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #e4a5c1, #d194b3);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212, 168, 190, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #be185d;
+            cursor: pointer;
+        }
+
+        header {
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #9f1239;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            color: #7c2d4a;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 60px;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 200;
+            color: #7c2d4a;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #9f1239;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 220px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d194b3, #c08299);
+            color: white;
+            box-shadow: 0 10px 30px rgba(209, 148, 179, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(209, 148, 179, 0.4);
+            background: linear-gradient(135deg, #c08299, #af7189);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #fefcff, #ffffff);
+            color: #9f1239;
+            border: 2px solid #d194b3;
+            box-shadow: 0 8px 25px rgba(209, 148, 179, 0.15);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(209, 148, 179, 0.25);
+            background: linear-gradient(135deg, #ffffff, #fefcff);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .visual-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .mirror-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+        }
+
+        .digital-mirror {
+            width: 300px;
+            height: 450px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 30px;
+            border: 3px solid #d194b3;
+            position: absolute;
+            right: 0;
+            top: 25px;
+            box-shadow: 0 20px 60px rgba(209, 148, 179, 0.2);
+            overflow: hidden;
+        }
+
+        .mirror-glow {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #d194b3, #c08299, #af7189, #9f1239);
+            border-radius: 35px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.02); }
+        }
+
+        .mirror-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fefcff, #f8fafc);
+            border-radius: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #9f1239;
+            opacity: 0.7;
+        }
+
+        .stylish-woman {
+            width: 250px;
+            height: 400px;
+            background: linear-gradient(135deg, #fce7f3, #f3e8ff);
+            border-radius: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 50px rgba(139, 92, 246, 0.15);
+            overflow: hidden;
+        }
+
+        .woman-silhouette {
+            width: 180px;
+            height: 320px;
+            background: linear-gradient(135deg, #c08299, #9f1239);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .woman-silhouette::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #d194b3;
+            border-radius: 50%;
+        }
+
+        .woman-silhouette::after {
+            content: '';
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 120px;
+            background: #af7189;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .features {
+            text-align: center;
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            margin-top: 60px;
+            border-radius: 30px;
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            color: #7c2d4a;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .features-subtitle {
+            font-size: 1.2rem;
+            color: #9f1239;
+            margin-bottom: 50px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff, #fefcff);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(209, 148, 179, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d194b3, #c08299);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: #9f1239;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .feature-description {
+            color: #7c2d4a;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 20px rgba(209, 148, 179, 0.2);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .main-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .mirror-container {
+                width: 300px;
+                height: 400px;
+            }
+
+            .digital-mirror {
+                width: 250px;
+                height: 350px;
+            }
+
+            .stylish-woman {
+                width: 200px;
+                height: 320px;
+            }
+
+            .cta-buttons {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-shapes">
+        <div class="color-swatch swatch-1"></div>
+        <div class="color-swatch swatch-2"></div>
+        <div class="color-swatch swatch-3"></div>
+        <div class="color-swatch swatch-4"></div>
+        
+        <div class="floral-pattern flower-1">🌸</div>
+        <div class="floral-pattern flower-2">🌺</div>
+        <div class="floral-pattern flower-3">🌷</div>
     </div>
-  </div>
 
-  <!-- Mobile Dropdown -->
-  <div id="mobile-menu" class="md:hidden hidden px-4 pt-2 pb-4 space-y-2 bg-white rounded-b-xl shadow text-base tracking-wide font-medium">
-    <%= link_to "Home", root_path, class: "block text-gray-700 hover:text-indigo-600" %>
-    <%= link_to "About", about_path, class: "block text-gray-700 hover:text-indigo-600" %>
-    <%= link_to "Quiz", undertone_quiz_path, class: "block text-gray-700 hover:text-indigo-600" %>
-    <%= link_to "OOTD", ootd_path, class: "block text-gray-700 hover:text-indigo-600" %>
-    <%= link_to "Favorites", favorite_dresses_path, class: "block text-gray-700 hover:text-indigo-600" %>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Color&Fit</a>
+            <ul class="nav-menu">
+          <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link " %></li>
+          <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Quiz", undertone_quiz_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "OOTD", ootd_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "WishList", favorite_dresses_path, class: "nav-link" %></li>
 
-    <!-- Mobile Auth Buttons -->
-    <%= link_to "Log In", new_user_session_path,
-        class: "block text-center w-auto bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-lg shadow-sm hover:bg-indigo-50 transition duration-200" %>
-    <%= link_to "Sign Up", new_user_registration_path,
-        class: "block text-center  w-auto bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-lg shadow-sm hover:bg-indigo-50 transition duration-200" %>
-  </div>
-</nav>
-<!-- Hero Section -->
-<section class="bg-[#fdf7f2] min-h-[80vh] flex items-center justify-center px-6 sm:px-12 lg:px-24 py-12">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-    
-    <!-- Text Content -->
-    <div class="space-y-6 text-center md:text-left">
-      <h2 class="text-2xl tracking-wide font-semibold text-gray-800">COLOR&FIT</h2>
-      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
-        Discover Your<br />Perfect Colors & Fit
-      </h1>
-      <div class="flex flex-col sm:flex-row sm:justify-start justify-center gap-4 pt-4">
-        <%= link_to "Start Color Quiz", undertone_quiz_path, class: "bg-[#fbdede] text-gray-900 text-lg font-medium px-6 py-3 rounded-full shadow hover:bg-[#f9cfcf] transition" %>
-        <%= link_to "Find Your Size", "#", class: "border border-[#fbdede] text-lg text-gray-800 font-medium px-6 py-3 rounded-full hover:bg-[#fdf0f0] transition" %>
-      </div>
+          <li class="nav-item"><%= link_to "Profile", profile_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Login", new_user_session_path, class: "nav-link active" %></li>
+          <li class="nav-item"><%= link_to "SignUp", new_user_registration_path, class: "nav-link active" %></li>
+
+          </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <main class="main-content">
+            <section class="hero-text">
+                <h1 class="hero-title">Discover Your Perfect Colors & Fit</h1>
+                <p class="hero-subtitle">Let our AI-powered fashion stylist analyze your preferences and create personalized looks that make you shine. Your journey to effortless elegance starts here.</p>
+                
+                <div class="cta-buttons">
+                <%= link_to "Start Quiz", undertone_quiz_path, class: "btn btn-primary" %>
+                <%= link_to "Discover Your Color Palette", palette_path, class: "btn btn-secondary" %>
+
+                
+                </div>
+            </section>
+
+            <section class="visual-section">
+                <div class="mirror-container">
+                    <div class="stylish-woman">
+                        <div class="woman-silhouette"></div>
+                    </div>
+                    <div class="digital-mirror">
+                        <div class="mirror-glow"></div>
+                        <div class="mirror-screen">
+                        <%= image_tag "hero.png", alt: "Logo", class: "my-logo" %>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        
     </div>
 
-    <!-- Image -->
-    <div class="flex justify-center">
-      <%= image_tag("hero.png", alt: "Models", class: "max-w-full h-auto rounded-xl") %>
-    </div>
+    <script>
+        // Add smooth scrolling and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
 
-  </div>
-</section>
+            // Button interactions
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  });
-</script>
+            // Add parallax effect to floating elements
+            window.addEventListener('mousemove', function(e) {
+                const swatches = document.querySelectorAll('.color-swatch');
+                const flowers = document.querySelectorAll('.floral-pattern');
+                
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                swatches.forEach((swatch, index) => {
+                    const intensity = (index + 1) * 0.5;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    swatch.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                
+                flowers.forEach((flower, index) => {
+                    const intensity = (index + 1) * 0.3;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    flower.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        }); buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add parallax effect to floating elements
+            window.addEventListener('mousemove', function(e) {
+                const swatches = document.querySelectorAll('.color-swatch');
+                const flowers = document.querySelectorAll('.floral-pattern');
+                
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                swatches.forEach((swatch, index) => {
+                    const intensity = (index + 1) * 0.5;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    swatch.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                
+                flowers.forEach((flower, index) => {
+                    const intensity = (index + 1) * 0.3;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    flower.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

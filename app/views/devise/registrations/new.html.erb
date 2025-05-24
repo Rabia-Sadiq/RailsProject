@@ -1,29 +1,176 @@
-<h2>Sign up</h2>
+<section class="signup-section themed-container" style="display: flex; gap: 30px; align-items: flex-start;">
+  <style>
+    .themed-container {
+      background-color: #f8f4e3;  /* Soft vintage cream */
+      border: 2px solid #d7c49e;  /* Warm beige border */
+      border-radius: 12px;
+      padding: 25px 30px;
+      max-width: 700px; /* widened for side-by-side */
+      margin: 30px auto;
+      font-family: 'Georgia', serif;
+      color: #5a4a24;
+      box-shadow: 3px 3px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: row;
+    }
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    .signup-form {
+      flex: 1 1 60%;
+    }
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    .signup-image {
+      flex: 1 1 35%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .signup-image img {
+      max-width: 100%;
+      border-radius: 50%;
+      border: 3px solid #d7c49e;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .signup-section h2 {
+      text-align: center;
+      font-weight: bold;
+      font-size: 2em;
+      margin-bottom: 25px;
+      color: #7f5f1a;
+    }
+
+    .field {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #6b522a;
+      font-size: 1.1em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px 12px;
+      border: 1.8px solid #d7c49e;
+      border-radius: 6px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      color: #4a3a10;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #b38b4c;
+      outline: none;
+    }
+
+    em {
+      font-style: normal;
+      font-weight: 500;
+      color: #a68c43;
+      font-size: 0.9em;
+      margin-left: 6px;
+    }
+
+    .actions {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    input[type="submit"] {
+      background-color: #b38b4c;
+      color: white;
+      font-weight: 700;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.15em;
+      transition: background-color 0.3s ease;
+      font-family: 'Georgia', serif;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #a07c3d;
+    }
+
+    /* Style error messages partial if present */
+    #error_explanation {
+      background-color: #fce9b2;
+      border: 1.5px solid #d7c49e;
+      color: #7f5f1a;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-family: 'Georgia', serif;
+      font-weight: 600;
+    }
+
+    /* Devise shared links styles */
+    .devise-links {
+      text-align: center;
+      margin-top: 20px;
+      font-family: 'Georgia', serif;
+    }
+
+    .devise-links a {
+      color: #7f5f1a;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .devise-links a:hover {
+      text-decoration: underline;
+      color: #b38b4c;
+    }
+  </style>
+
+  <div class="signup-form">
+    <h2>Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :name, "Full Name" %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+
+    <div class="devise-links">
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  
+</section>

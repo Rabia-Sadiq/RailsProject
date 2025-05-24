@@ -1,17 +1,45 @@
-<h2>Undertone Quiz</h2>
-
-<p><strong>Question <%= @current_index + 1 %> of 7</strong></p>
-<p><%= @question[:question] %></p>
-
-<%= form_with url: "/undertone_quiz/answer", method: :post do %>
-  <% @question[:options].each do |opt| %>
-    <div>
-      <label>
-        <%= radio_button_tag :option, opt %>
-        <%= opt %>
-      </label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discover Your Undertone | Color&Fit</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fefdf9;
+      color: #2d2d2d;
+    }
+    .btn-quiz {
+      background-color: #e7a89b;
+    }
+    .btn-quiz:hover {
+      background-color: #d88d82;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-12">
+  <div class="max-w-4xl w-full text-center lg:flex lg:items-center lg:justify-between lg:text-left space-y-8 lg:space-y-0">
+    
+    <!-- Left Section -->
+    <div class="lg:w-1/2 space-y-6">
+      <h1 class="text-3xl md:text-5xl font-semibold">Discover Your Undertone</h1>
+      <p class="text-base md:text-lg leading-relaxed">
+        Understanding your undertone can help you choose clothing colors that enhance your natural appearance.
+      </p>
+      <a href="question1.html">
+        <button class="btn-quiz px-6 py-3 mt-9 rounded-lg text-white text-lg transition duration-200">
+          Begin Quiz
+        </button>
+      </a>
     </div>
-  <% end %>
 
-  <%= submit_tag "Next" %>
-<% end %>
+    <!-- Right Section -->
+    <div class="lg:w-1/2">
+      <img src="your-image-path.png" alt="Undertone Illustration" class="w-full max-w-md mx-auto lg:mx-0">
+    </div>
+
+  </div>
+</body>
+</html>

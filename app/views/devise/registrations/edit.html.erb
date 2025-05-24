@@ -1,43 +1,181 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<section class="edit-section themed-container">
+  <style>
+    .themed-container {
+      background-color: #f8f4e3;  /* Soft vintage cream */
+      border: 2px solid #d7c49e;  /* Warm beige border */
+      border-radius: 12px;
+      padding: 25px 30px;
+      max-width: 450px;
+      margin: 30px auto;
+      font-family: 'Georgia', serif;
+      color: #5a4a24;
+      box-shadow: 3px 3px 12px rgba(0,0,0,0.1);
+    }
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    h2 {
+      text-align: center;
+      font-weight: bold;
+      font-size: 2em;
+      margin-bottom: 25px;
+      color: #7f5f1a;
+    }
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    .field {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+    }
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #6b522a;
+      font-size: 1.1em;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px 12px;
+      border: 1.8px solid #d7c49e;
+      border-radius: 6px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      color: #4a3a10;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #b38b4c;
+      outline: none;
+    }
+
+    i {
+      font-style: italic;
+      font-weight: 400;
+      color: #a68c43;
+      font-size: 0.9em;
+      margin-left: 4px;
+    }
+
+    em {
+      font-style: normal;
+      font-weight: 500;
+      color: #a68c43;
+      font-size: 0.9em;
+      margin-top: 6px;
+    }
+
+    .actions {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    input[type="submit"],
+    button {
+      background-color: #b38b4c;
+      color: white;
+      font-weight: 700;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.15em;
+      transition: background-color 0.3s ease;
+      font-family: 'Georgia', serif;
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover,
+    button:hover {
+      background-color: #a07c3d;
+    }
+
+    h3 {
+      margin-top: 40px;
+      color: #7f5f1a;
+      font-weight: 700;
+      font-size: 1.5em;
+      text-align: center;
+    }
+
+    div {
+      color: #5a4a24;
+      font-family: 'Georgia', serif;
+      font-size: 1em;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    a {
+      color: #7f5f1a;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Georgia', serif;
+      margin-top: 20px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    a:hover {
+      color: #b38b4c;
+      text-decoration: underline;
+    }
+
+    /* Style error messages partial if present */
+    #error_explanation {
+      background-color: #fce9b2;
+      border: 1.5px solid #d7c49e;
+      color: #7f5f1a;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-family: 'Georgia', serif;
+      font-weight: 600;
+    }
+  </style>
+
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+      <% if @minimum_password_length %>
+        <br />
+        <em><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "current-password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update" %>
+    </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+  <h3>Cancel my account</h3>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+  <%= link_to "Back", :back %>
+</section>

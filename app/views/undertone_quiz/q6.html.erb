@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Undertone Quiz - Q6</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fdf6e3;
+      font-family: 'Georgia', serif;
+      color: #4b3f30;
+    }
+    .card {
+      background-color: #fff8e1;
+      border: 2px solid #d4af7f;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="card w-full max-w-xl">
+    <h1 class="text-2xl font-bold mb-4">Question 6</h1>
+<p class="text-lg mb-6">What is your natural hair color?</p>
+
+<form action="question7.html" method="GET" class="space-y-4">
+  <label class="block"><input type="radio" name="q6" value="Ashy tones" class="mr-2"> Ashy tones</label>
+  <label class="block"><input type="radio" name="q6" value="Warm tones" class="mr-2"> Warm tones</label>
+  <label class="block"><input type="radio" name="q6" value="Neutral or hard to tell" class="mr-2"> Neutral or hard to tell</label>
+  <label class="block"><input type="radio" name="q6" value="Other" class="mr-2"> Other</label>
+
+  <div class="mt-6 text-right">
+    <button type="submit" class="bg-yellow-700 text-white px-4 py-2 rounded-lg hover:bg-yellow-800">Next →</button>
+  </div>
+</form>
+
+  </div>
+</body>
+</html>

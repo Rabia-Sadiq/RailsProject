@@ -1,0 +1,111 @@
+<div id="profile" data-controller="profile">
+  <h1>User Profile</h1>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
+
+  <p>
+    <strong>Undertone:</strong>
+    <%= @user.undertone %>
+  </p>
+
+  <p>
+    <strong>Weight (kg):</strong>
+    <span data-profile-target="weightDisplay"><%= @user.weight %></span>
+    <input
+      data-profile-target="weightInput"
+      type="number"
+      name="user[weight]"
+      value="<%= @user.weight %>"
+      style="display:none;"
+      min="0"
+    />
+  </p>
+
+  <p>
+    <strong>Height (cm):</strong>
+    <span data-profile-target="heightDisplay"><%= @user.height %></span>
+    <input
+      data-profile-target="heightInput"
+      type="number"
+      name="user[height]"
+      value="<%= @user.height %>"
+      style="display:none;"
+      min="0"
+    />
+  </p>
+
+  <button data-action="click->profile#toggleEdit" data-profile-target="editBtn">
+    Edit Profile
+  </button>
+
+  <button
+    data-action="click->profile#save"
+    data-profile-target="saveBtn"
+    style="display:none;"
+  >
+    Save Changes
+  </button>
+</div>
+
+<style>
+  #profile {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  #profile h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #b25c2f;
+  }
+
+  #profile p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #7a4a1b;
+  }
+
+  #profile input[type=number] {
+    width: 80px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1.5px solid #b25c2f;
+    font-size: 16px;
+    color: #4b2c0d;
+    outline: none;
+  }
+
+  #profile button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background-color 0.3s;
+  }
+
+  #profile button[data-profile-target="editBtn"] {
+    background-color: #b25c2f;
+    color: white;
+  }
+
+  #profile button[data-profile-target="saveBtn"] {
+    background-color: #4caf50;
+    color: white;
+  }
+</style>

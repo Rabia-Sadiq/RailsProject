@@ -2,3 +2,12 @@
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
+// app/javascript/controllers/index.js
+import { Application } from "@hotwired/stimulus";
+import ProfileController from "./profile_controller";
+
+const application = Application.start();
+application.register("profile", ProfileController);
+
+window.Stimulus = application; // optional, for debugging
+

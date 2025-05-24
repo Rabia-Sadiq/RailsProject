@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Undertone Quiz - Q2</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fdf6e3;
+      font-family: 'Georgia', serif;
+      color: #4b3f30;
+    }
+
+    .card {
+      background-color: #fff8e1;
+      border: 2px solid #d4af7f;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="card w-full max-w-xl">
+    <h1 class="text-2xl font-bold mb-4">Question 2</h1>
+    <p class="text-lg mb-6">How does your skin react to sun exposure?</p>
+
+    <!-- Image Placeholder -->
+    <div class="mb-6">
+      <img src="images/q2.jpg" alt="Sun Exposure" class="w-full rounded-lg shadow-md">
+    </div>
+
+    <!-- Options -->
+    <form action="question3.html" method="GET" class="space-y-4">
+      <label class="block">
+        <input type="radio" name="q2" value="Burns easily, rarely tans" class="mr-2"> Burns easily, rarely tans
+      </label>
+      <label class="block">
+        <input type="radio" name="q2" value="Tans easily, rarely burns" class="mr-2"> Tans easily, rarely burns
+      </label>
+      <label class="block">
+        <input type="radio" name="q2" value="Burns then tans" class="mr-2"> Burns then tans
+      </label>
+      <label class="block">
+        <input type="radio" name="q2" value="Don't know" class="mr-2"> I don’t know
+      </label>
+
+      <div class="mt-6 text-right">
+        <button type="submit" class="bg-yellow-700 text-white px-4 py-2 rounded-lg hover:bg-yellow-800">Next →</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

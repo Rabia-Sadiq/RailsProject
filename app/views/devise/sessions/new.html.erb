@@ -1,29 +1,154 @@
-<h2>Log in</h2>
+<section class="login-section themed-container">
+  <style>
+    .themed-container {
+      background-color: #f8f4e3;  /* Soft vintage cream */
+      border: 2px solid #d7c49e;  /* Warm beige border */
+      border-radius: 12px;
+      padding: 25px 30px;
+      max-width: 400px;
+      margin: 40px auto;
+      font-family: 'Georgia', serif;
+      color: #5a4a24;
+      box-shadow: 3px 3px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    h2 {
+      font-weight: bold;
+      font-size: 2em;
+      margin-bottom: 25px;
+      color: #7f5f1a;
+    }
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    .field {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-  <% if devise_mapping.rememberable? %>
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #6b522a;
+      font-size: 1.1em;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px 12px;
+      border: 1.8px solid #d7c49e;
+      border-radius: 6px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      color: #4a3a10;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #b38b4c;
+      outline: none;
+    }
+
+    .field input[type="checkbox"] {
+      width: auto;
+      margin-right: 6px;
+      align-self: center;
+    }
+
+    .field label[for] {
+      cursor: pointer;
+      display: inline;
+      font-weight: 500;
+      margin-left: 0;
+      color: #6b522a;
+      font-size: 1em;
+    }
+
+    .actions {
+      margin-top: 25px;
+    }
+
+    input[type="submit"] {
+      background-color: #b38b4c;
+      color: white;
+      font-weight: 700;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.15em;
+      transition: background-color 0.3s ease;
+      font-family: 'Georgia', serif;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #a07c3d;
+    }
+
+    a {
+      color: #7f5f1a;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'Georgia', serif;
+      margin-top: 18px;
+      display: inline-block;
+      font-size: 1em;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #b38b4c;
+      text-decoration: underline;
+    }
+
+    /* Links container */
+    .links-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-around;
+      font-size: 0.95em;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+
+  <h2>Log in</h2>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "current-password" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field" style="flex-direction: row; align-items: center;">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Log in" %>
+    </div>
+
+    <div class="links-container">
+      <%= link_to "Forgot your password?", new_user_password_path %>
+      <%= link_to "Change your password", edit_user_registration_path %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-  <%= link_to "Forgot your password?", new_user_password_path %>
-<%= link_to "Change your password", edit_user_registration_path %>
-
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</section>

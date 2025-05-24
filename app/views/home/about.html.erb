@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Fashion Stylist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fefcff 0%, #faf7fb 50%, #ffffff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .color-swatch {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .swatch-1 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #f5d0dd, #e4a5c1);
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .swatch-2 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            top: 25%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .swatch-3 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #c4b5fd, #a78bfa);
+            bottom: 20%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        .swatch-4 {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #34d399, #10b981);
+            top: 60%;
+            right: 8%;
+            animation-delay: 1s;
+        }
+
+        .floral-pattern {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(212, 168, 190, 0.3);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .flower-1 {
+            top: 10%;
+            right: 25%;
+            animation-delay: 0s;
+        }
+
+        .flower-2 {
+            bottom: 15%;
+            right: 30%;
+            animation-delay: 3s;
+        }
+
+        .flower-3 {
+            top: 45%;
+            left: 8%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 168, 190, 0.2);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #be185d;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+        .how-it-works-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .how-it-works-title {
+    font-size: 32px;
+    color: #7a2c5b;
+    margin-bottom: 30px;
+  }
+
+  .feature-box {
+    background-color: #fce9f1;
+    border-radius: 15px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(122, 44, 91, 0.1);
+    width: 100%;
+    color: #7a2c5b;
+  }
+
+  .feature-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+
+        .nav-link {
+            text-decoration: none;
+            color: #9f1239;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #be185d;
+            background: rgba(212, 168, 190, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #e4a5c1, #d194b3);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212, 168, 190, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #be185d;
+            cursor: pointer;
+        }
+
+        header {
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #9f1239;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            color: #7c2d4a;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 60px;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 200;
+            color: #7c2d4a;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #9f1239;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 220px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d194b3, #c08299);
+            color: white;
+            box-shadow: 0 10px 30px rgba(209, 148, 179, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(209, 148, 179, 0.4);
+            background: linear-gradient(135deg, #c08299, #af7189);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #fefcff, #ffffff);
+            color: #9f1239;
+            border: 2px solid #d194b3;
+            box-shadow: 0 8px 25px rgba(209, 148, 179, 0.15);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(209, 148, 179, 0.25);
+            background: linear-gradient(135deg, #ffffff, #fefcff);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .visual-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .mirror-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+        }
+
+        .digital-mirror {
+            width: 300px;
+            height: 450px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 30px;
+            border: 3px solid #d194b3;
+            position: absolute;
+            right: 0;
+            top: 25px;
+            box-shadow: 0 20px 60px rgba(209, 148, 179, 0.2);
+            overflow: hidden;
+        }
+
+        .mirror-glow {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #d194b3, #c08299, #af7189, #9f1239);
+            border-radius: 35px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.02); }
+        }
+
+        .mirror-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fefcff, #f8fafc);
+            border-radius: 27px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #9f1239;
+            opacity: 0.7;
+        }
+
+        .stylish-woman {
+            width: 250px;
+            height: 400px;
+            background: linear-gradient(135deg, #fce7f3, #f3e8ff);
+            border-radius: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 50px rgba(139, 92, 246, 0.15);
+            overflow: hidden;
+        }
+
+        .woman-silhouette {
+            width: 180px;
+            height: 320px;
+            background: linear-gradient(135deg, #c08299, #9f1239);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .woman-silhouette::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #d194b3;
+            border-radius: 50%;
+        }
+
+        .woman-silhouette::after {
+            content: '';
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 120px;
+            background: #af7189;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .features {
+            text-align: center;
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+            border-radius: 30px;
+        }
+
+        .features-title {
+            font-size: 2.5rem;
+            color: #7c2d4a;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .features-subtitle {
+            font-size: 1.2rem;
+            color: #9f1239;
+            margin-bottom: 50px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff, #fefcff);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(209, 148, 179, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d194b3, #c08299);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: #9f1239;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .feature-description {
+            color: #7c2d4a;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 20px rgba(209, 148, 179, 0.2);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .main-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .mirror-container {
+                width: 300px;
+                height: 400px;
+            }
+
+            .digital-mirror {
+                width: 250px;
+                height: 350px;
+            }
+
+            .stylish-woman {
+                width: 200px;
+                height: 320px;
+            }
+
+            .cta-buttons {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-shapes">
+        <div class="color-swatch swatch-1"></div>
+        <div class="color-swatch swatch-2"></div>
+        <div class="color-swatch swatch-3"></div>
+        <div class="color-swatch swatch-4"></div>
+        
+        <div class="floral-pattern flower-1">🌸</div>
+        <div class="floral-pattern flower-2">🌺</div>
+        <div class="floral-pattern flower-3">🌷</div>
+    </div>
+
+     <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Color&Fit</a>
+            <ul class="nav-menu">
+          <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link " %></li>
+          <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Quiz", undertone_quiz_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "OOTD", ootd_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "WishList", favorite_dresses_path, class: "nav-link" %></li>
+
+          <li class="nav-item"><%= link_to "Profile", profile_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to "Login", new_user_session_path, class: "nav-link active" %></li>
+          <li class="nav-item"><%= link_to "SignUp", new_user_registration_path, class: "nav-link active" %></li>
+
+          </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        
+        <section class="features">
+            <h2 class="features-title">About Color&Fit</h2>
+            <p class="features-subtitle">Color&Fit is a personalized fashion assistant that helps users discover outfits that match their skin undertone, mood, and even the weather—all powered by AI.
+
+Whether you're looking for a daily outfit recommendation or trying to build your wardrobe with pieces that truly suit you, this platform acts like a virtual stylist tailored just for you.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Undertone Quiz</h3>
+                    <p class="feature-description">An interactive, multi-page quiz that helps users identify their skin undertone—warm, cool, or neutral—through a series of intuitive questions. This is the foundation for building a personalized styling experience.
+
+</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌈</div>
+                    <h3 class="feature-title">Color Palette Results</h3>
+                    <p class="feature-description">Based on the quiz result, users receive a curated color palette tailored to enhance their natural features. These palettes guide product suggestions and help users choose clothing that flatters their skin tone effortlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛍️</div>
+                    <h3 class="feature-title">AI Product Suggestions</h3>
+                    <p class="feature-description">Using AI logic and color theory, the app recommends fashion products that align with the user’s undertone. It analyzes product colors and filters them to match the user's palette, making shopping smarter and more personalized.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💖</div>
+                    <h3 class="feature-title">Favorite Products</h3>
+                    <p class="feature-description">Users can bookmark and manage a personalized list of their favorite items. This feature creates a mini-closet within the app, making it easy to revisit products they love or plan future purchases.
+
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌦️ </div>
+                    <h3 class="feature-title">Weather Integration</h3>
+                    <p class="feature-description">App uses a Weather API to fetch real-time weather data based on the user’s location. This data helps the AI suggest weather-appropriate outfits through the Outfit of the Day feature.
+
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨 </div>
+                    <h3 class="feature-title">Favorite a Color</h3>
+                    <p class="feature-description">Users can favorite specific colors from their personalized palette. This allows the AI to prioritize those shades in future product suggestions, making styling even more tailored to individual preferences.
+
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+  
+<div class="how-it-works-wrapper">
+  <h2 class="how-it-works-title">How It Works</h2>
+
+  <div class="feature-box">
+    <div class="feature-title">🌟 Take the Undertone Quiz</div>
+    Start with a fun quiz to discover if your skin tone is warm, cool, or neutral.
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-title">🎨 Get a Personalized Color Palette</div>
+    Based on your quiz results, receive a palette that highlights your natural features.
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-title">🛍 View AI-Matched Products</div>
+    AI filters fashion items to ensure they match your unique undertone and color palette.
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-title">👗 Receive Outfit Suggestions</div>
+    Real-time weather data is fetched via API to suggest the perfect outfit of the day.
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-title">💖 Favorite Products & Colors</div>
+    Mark colors and items as favorites to get better, more personalized suggestions.
+  </div>
+</div>
+
+    </div>
+
+    <script>
+        // Add smooth scrolling and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+
+            // Button interactions
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add parallax effect to floating elements
+            window.addEventListener('mousemove', function(e) {
+                const swatches = document.querySelectorAll('.color-swatch');
+                const flowers = document.querySelectorAll('.floral-pattern');
+                
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                swatches.forEach((swatch, index) => {
+                    const intensity = (index + 1) * 0.5;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    swatch.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                
+                flowers.forEach((flower, index) => {
+                    const intensity = (index + 1) * 0.3;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    flower.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        }); buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add parallax effect to floating elements
+            window.addEventListener('mousemove', function(e) {
+                const swatches = document.querySelectorAll('.color-swatch');
+                const flowers = document.querySelectorAll('.floral-pattern');
+                
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                swatches.forEach((swatch, index) => {
+                    const intensity = (index + 1) * 0.5;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    swatch.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                
+                flowers.forEach((flower, index) => {
+                    const intensity = (index + 1) * 0.3;
+                    const x = mouseX * intensity;
+                    const y = mouseY * intensity;
+                    flower.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
