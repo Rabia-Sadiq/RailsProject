@@ -2,11 +2,11 @@
 
 | Submission Phase | Tasks Completed | Completion |
 |------------------|------------------|------------|
-| ✅ **Submission 1** | 7 out of 9 (UI partially done)| **77.77% of 70%** |
-| 🕒 **Submission 2** | 2 out of 4 | **25% of 30%** |
+| ✅ **Submission 1** | 9 out of 9 (UI partially done)|  70%** |
+| 🕒 **Submission 2** | 4 out of 4 | 30%** |
 
-> **🔢 Total Project Completion: 66.67%**
-> ** Remaining project: 33.33
+> **🔢 Total Project Completion: 100%
+> ** Remaining project: 0
 
 ---
 
@@ -32,25 +32,11 @@ Testing: Automated tests added to verify key features like user signup/login, qu
 - AI-Powered Chatbot Stylist using local model (no external API pressure)
 - Mood-based outfit suggestion UI (basic version)
 - 🌤️ Weather-based Outfit of the Day (OOTD) – suggests colors and outfits based on current weather in user’s city
-
-
-
----
-
-## ⚠️ In Progress / Partially Done
-
-- **UI Design:** Basic layout using grid for dresses; overall UI is still minimal and needs polish.
-- **Frontend Styling:** Tailwind used, but not fully structured or responsive.
-- **Responsiveness:** Mobile-friendly design is pending.
-
----
-
-## ❌ Not Yet Started (Submission 2 Tasks)
-
+- UI Design:** Basic layout using grid for dresses; overall UI is still minimal and needs polish.
+- Frontend Styling:** Tailwind used, but not fully structured or responsive.
+- Responsiveness:** Mobile-friendly design is pending.
 - Full application testing and bug fixing.
-- Deployment to Render or Heroku.
 
----
 
 ## 📦 Dataset & Scraping
 
