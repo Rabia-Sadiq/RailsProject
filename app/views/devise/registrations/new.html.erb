@@ -1,32 +1,51 @@
-<section class="signup-section themed-container" style="display: flex; gap: 30px; align-items: flex-start;">
+<section class="signup-section themed-container">
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
     .themed-container {
       background-color: #f8f4e3;  /* Soft vintage cream */
       border: 2px solid #d7c49e;  /* Warm beige border */
       border-radius: 12px;
       padding: 25px 30px;
-      max-width: 700px; /* widened for side-by-side */
-      margin: 30px auto;
+      width: 90%;
+      max-width: 1200px;
+      height: 100vh; /* Full viewport height */
+      margin: 0 auto;
       font-family: 'Georgia', serif;
       color: #5a4a24;
       box-shadow: 3px 3px 12px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: row;
+      align-items: stretch;
+      box-sizing: border-box;
     }
 
     .signup-form {
       flex: 1 1 60%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 30px;
     }
 
     .signup-image {
-      flex: 1 1 35%;
+      flex: 1 1 40%;
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: #fffaf0;
+      border-left: 2px solid #d7c49e;
+      border-radius: 0 12px 12px 0;
+      overflow: hidden;
     }
 
     .signup-image img {
-      max-width: 100%;
+      max-width: 80%;
+      max-height: 80%;
       border-radius: 50%;
       border: 3px solid #d7c49e;
       box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
@@ -102,7 +121,6 @@
       background-color: #a07c3d;
     }
 
-    /* Style error messages partial if present */
     #error_explanation {
       background-color: #fce9b2;
       border: 1.5px solid #d7c49e;
@@ -114,7 +132,6 @@
       font-weight: 600;
     }
 
-    /* Devise shared links styles */
     .devise-links {
       text-align: center;
       margin-top: 20px;
@@ -172,5 +189,7 @@
     </div>
   </div>
 
-  
+  <div class="signup-image">
+    <img src="/images/signup.png" alt="Sign up illustration">
+  </div>
 </section>

@@ -1,30 +1,52 @@
 <section class="login-section themed-container">
   <style>
     .themed-container {
-      background-color: #f8f4e3;  /* Soft vintage cream */
-      border: 2px solid #d7c49e;  /* Warm beige border */
+      background-color: #f8f4e3;
+      border: 2px solid #d7c49e;
       border-radius: 12px;
       padding: 25px 30px;
-      max-width: 400px;
-      margin: 40px auto;
+      max-width: 900px;
+      margin: 0 auto;
       font-family: 'Georgia', serif;
       color: #5a4a24;
-      box-shadow: 3px 3px 12px rgba(0,0,0,0.1);
-      text-align: center;
+      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      align-items: center;
+      gap: 30px;
     }
 
-    h2 {
+    .login-form {
+      flex: 1 1 60%;
+    }
+
+    .login-image {
+      flex: 1 1 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-image img {
+      max-width: 100%;
+      border-radius: 50%;
+      border: 3px solid #d7c49e;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-form h2 {
       font-weight: bold;
       font-size: 2em;
       margin-bottom: 25px;
       color: #7f5f1a;
+      text-align: center;
     }
 
     .field {
       margin-bottom: 18px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
     }
 
     label {
@@ -43,8 +65,6 @@
       font-family: inherit;
       transition: border-color 0.3s ease;
       color: #4a3a10;
-      width: 100%;
-      box-sizing: border-box;
     }
 
     input[type="email"]:focus,
@@ -53,23 +73,14 @@
       outline: none;
     }
 
-    .field input[type="checkbox"] {
+    input[type="checkbox"] {
       width: auto;
       margin-right: 6px;
-      align-self: center;
-    }
-
-    .field label[for] {
-      cursor: pointer;
-      display: inline;
-      font-weight: 500;
-      margin-left: 0;
-      color: #6b522a;
-      font-size: 1em;
     }
 
     .actions {
       margin-top: 25px;
+      text-align: center;
     }
 
     input[type="submit"] {
@@ -83,72 +94,68 @@
       font-size: 1.15em;
       transition: background-color 0.3s ease;
       font-family: 'Georgia', serif;
-      width: 100%;
-      max-width: 300px;
-      margin: 0 auto;
-      display: block;
     }
 
     input[type="submit"]:hover {
       background-color: #a07c3d;
     }
 
-    a {
-      color: #7f5f1a;
-      text-decoration: none;
-      font-weight: 600;
-      font-family: 'Georgia', serif;
-      margin-top: 18px;
-      display: inline-block;
-      font-size: 1em;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: #b38b4c;
-      text-decoration: underline;
-    }
-
-    /* Links container */
     .links-container {
       margin-top: 20px;
       display: flex;
-      justify-content: space-around;
-      font-size: 0.95em;
+      justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
+      font-size: 0.95em;
+    }
+
+    .links-container a {
+      color: #7f5f1a;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .links-container a:hover {
+      text-decoration: underline;
+      color: #b38b4c;
     }
   </style>
 
-  <h2>Log in</h2>
+  <div class="login-form">
+    <h2>Log in</h2>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-    </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
 
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password" %>
-    </div>
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
 
-    <% if devise_mapping.rememberable? %>
-      <div class="field" style="flex-direction: row; align-items: center;">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+      <% if devise_mapping.rememberable? %>
+        <div class="field" style="flex-direction: row; align-items: center;">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Log in" %>
+      </div>
+
+      <div class="links-container">
+        <%= link_to "Forgot your password?", new_user_password_path %>
+        <%= link_to "Change your password", edit_user_registration_path %>
       </div>
     <% end %>
 
-    <div class="actions">
-      <%= f.submit "Log in" %>
-    </div>
+    <%= render "devise/shared/links" %>
+  </div>
 
-    <div class="links-container">
-      <%= link_to "Forgot your password?", new_user_password_path %>
-      <%= link_to "Change your password", edit_user_registration_path %>
-    </div>
-  <% end %>
-
-  <%= render "devise/shared/links" %>
+  <div class="login-image">
+    <img src="/images/login.png" alt="Vintage Illustration">
+  </div>
 </section>
