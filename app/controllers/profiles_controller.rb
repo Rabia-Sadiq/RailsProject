@@ -24,7 +24,8 @@ class ProfilesController < ApplicationController
     @user = current_user
   end
 
-  def user_params
-    params.require(:user).permit(:weight, :height)
-  end
+  def profile_params
+  params.require(:user).permit(:name, :weight, :height)
+end
+
 end
