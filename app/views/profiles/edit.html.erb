@@ -1,0 +1,33 @@
+<div id="profile" style="max-width:400px; margin:40px auto; padding:30px; background:#fff8f0; border-radius:12px; box-shadow:0 4px 8px rgba(0,0,0,0.1); font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <h1 style="text-align:center; margin-bottom:24px; color:#b25c2f;">Edit Profile</h1>
+
+  <%= form_with model: @user, url: profile_path, method: :patch, local: true do |form| %>
+    <div style="margin-bottom:18px;">
+      <%= form.label :name, "Name", style: "display:block; font-weight:600; color:#7a4a1b; margin-bottom:6px;" %>
+      <%= form.text_field :name, style: "width:100%; padding:8px; border-radius:6px; border:1.5px solid #b25c2f; font-size:16px; color:#4b2c0d; outline:none;" %>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <%= form.label :weight, "Weight (kg)", style: "display:block; font-weight:600; color:#7a4a1b; margin-bottom:6px;" %>
+      <%= form.number_field :weight, step: 0.1, min: 0, style: "width:80px; padding:6px; border-radius:6px; border:1.5px solid #b25c2f; font-size:16px; color:#4b2c0d; outline:none;" %>
+    </div>
+
+    <div style="margin-bottom:18px;">
+      <%= form.label :height, "Height (cm)", style: "display:block; font-weight:600; color:#7a4a1b; margin-bottom:6px;" %>
+      <%= form.number_field :height, step: 0.1, min: 0, style: "width:80px; padding:6px; border-radius:6px; border:1.5px solid #b25c2f; font-size:16px; color:#4b2c0d; outline:none;" %>
+    </div>
+
+    <div>
+      <%= form.submit "Save Changes", style: "display:block; width:100%; padding:12px; background:#4caf50; color:#fff; border:none; border-radius:8px; font-weight:600; font-size:16px; cursor:pointer; transition: background-color 0.3s;" %>
+    </div>
+  <% end %>
+
+  <%= link_to "Back to Profile", profile_path, 
+      style: "display:block; width:100%; margin-top:12px; padding:12px; background:#b25c2f; color:#fff; border:none; border-radius:8px; font-weight:600; font-size:16px; text-align:center; text-decoration:none; cursor:pointer; transition: background-color 0.3s;", 
+      onmouseover: "this.style.background='#9e4a28'", 
+      onmouseout: "this.style.background='#b25c2f'" %>
+
+  <% if alert %>
+    <p style="color:#d32f2f; font-size:14px; margin-top:10px; text-align:center;"><%= alert %></p>
+  <% end %>
+</div>

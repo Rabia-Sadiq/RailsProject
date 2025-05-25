@@ -9,14 +9,12 @@ Rails.application.routes.draw do
   root 'home#index'
  get "undertone_quiz", to: "undertone_quiz#show"
 end
-# config/routes.rb
-resource :profile, only: [:show, :update]
+
+resource :profile, only: [:show, :update, :edit]
 
  get 'about', to:'home#about'
  get 'ootd', to: 'products#ootd'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  # root to: 'home#index'
-
+  
   get "up" => "rails/health#show", as: :rails_health_check
 
 get 'q1', to: 'undertone_quiz#q1'
@@ -38,7 +36,8 @@ get 'q7', to: 'undertone_quiz#q7'
   get 'chat_bot', to: 'chat_bot#show'
   post 'chat_bot', to: 'chat_bot#create', as: 'create_chat_bot'
   
-  # Add your other routes here
+ 
+patch '/users/profile', to: 'profiles#update'
 end
     Rails.application.routes.draw do
   get "chat_bot/show"
@@ -51,6 +50,6 @@ end
       get 'palette', to: 'users#palette'
     end
 
-  # Defines the root path route ("/")
+  
   
 end

@@ -2,21 +2,26 @@ class ProfilesController < ApplicationController
   before_action :set_user
 
   def show
-     @user
+    # @user is set in before_action
+  end
+
+  def edit
+    # @user is set in before_action, used in form
   end
 
   def update
     if @user.update(user_params)
-      render json: { weight: @user.weight, height: @user.height }
+      redirect_to profile_path, notice: "Profile updated successfully."
     else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      flash.now[:alert] = @user.errors.full_messages.to_sentence
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
   def set_user
-    @user = current_user # or User.find(params[:id]) depending on your logic
+    @user = current_user
   end
 
   def user_params
