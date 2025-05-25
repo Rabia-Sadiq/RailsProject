@@ -101,13 +101,14 @@
     }
 
     .links-container {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.95em;
-    }
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 12px;
+  font-size: 0.95em;
+  text-align: center;
+}
 
     .links-container a {
       color: #7f5f1a;
@@ -149,10 +150,12 @@
       <div class="links-container">
         <%= link_to "Forgot your password?", new_user_password_path %>
         <%= link_to "Change your password", edit_user_registration_path %>
+        <%= link_to "New user? Sign up", new_user_registration_path %>
+
       </div>
     <% end %>
 
-    <%= render "devise/shared/links" %>
+    
   </div>
 
   <div class="login-image">

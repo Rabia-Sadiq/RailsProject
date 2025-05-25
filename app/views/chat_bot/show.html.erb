@@ -27,7 +27,7 @@
         <div class="card-footer">
           <%= form_with url: create_chat_bot_path, method: :post, data: { controller: "chat-form" } do |form| %>
             <div class="input-group">
-              <%= form.text_field :message, class: "form-control", placeholder: "Ask about colors or sizes...", required: true %>
+<%= form.text_field :message, class: "chat-input form-control", placeholder: "Ask about colors or sizes...", required: true %>
               <div class="input-group-append">
                 <%= form.submit "Send", class: "btn btn-primary" %>
               </div>
@@ -46,3 +46,26 @@
     chatContainer.scrollTop = chatContainer.scrollHeight;
   });
 </script>
+<style>
+.chat-input {
+  border-radius: 20px;       /* Rounded pill shape */
+  padding: 12px 20px;        /* Comfortable padding */
+  font-size: 1rem;           /* Slightly larger font */
+  border: 1.5px solid #ccc;  /* Light border */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  max-width: 100%;           /* Full width */
+  box-sizing: border-box;    /* Include padding in width */
+  margin-bottom:10px;
+}
+
+.chat-input::placeholder {
+  color: #aaa;               /* Light grey placeholder */
+  font-style: italic;
+}
+
+.chat-input:focus {
+  border-color: #4a90e2;     /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  outline: none;             /* Remove default outline */
+}
+</style>

@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
   before_action :set_user
 
   def show
-    # @user is set
+     @user
   end
 
   def update

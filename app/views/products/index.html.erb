@@ -79,22 +79,49 @@
 </div>
 
 <!-- PRODUCTS GRID -->
+<!-- PRODUCTS GRID -->
 <div class="products-grid">
   <% @products.each do |product| %>
     <% next if product.image_url.blank? || product.image_url.downcase.include?("not found") %>
+    
     <div class="product-card">
-      <%= image_tag product.image_url, alt: product.title, class: "product-img" %>
+      <%# Extract image_url from JSON or string %>
+      <%
+        image_url = ""
+
+        if product.image_url.present? && product.image_url.strip.start_with?("[", "{")
+          begin
+            data = JSON.parse(product.image_url)
+            if data.is_a?(Array) && data.first.is_a?(Hash) && data.first["src"].present?
+              image_url = data.first["src"]
+            elsif data.is_a?(Hash) && data["src"].present?
+              image_url = data["src"]
+            end
+          rescue JSON::ParserError
+            image_url = product.image_url.to_s.strip
+          end
+        else
+          image_url = product.image_url.to_s.strip
+        end
+      %>
+
+      <%# Show image or placeholder %>
+      <% if image_url.present? && (image_url.start_with?("http") || image_url.start_with?("//")) && !image_url.downcase.include?("not found") %>
+        <%= image_tag image_url, alt: product.title, class: "product-img" %>
+      <% else %>
+        <div class="product-img placeholder-img">No Image Available</div>
+      <% end %>
+
       <h2><%= product.title %></h2>
       <p><strong>Brand:</strong> <%= product.brand %></p>
       <p><strong>Color:</strong> <%= product.color %></p>
       <p><strong>Price:</strong> Rs. <%= product.price %></p>
-      <%= link_to "View", product_path(product), class: "btn-view" %>
+  <%= link_to "View", product.link, class: "btn-view", target: "_blank", rel: "noopener noreferrer" %>
       <!-- Favourite Button -->
-      <%= button_to "❤️ Favorite", favorite_dresses_path(product), method: :post, class: "btn-favorite" %>
+      <%= button_to "❤️ Favorite", favorite_dresses_path, method: :post, params: { product_id: product.id }, class: "btn-favorite" %>
     </div>
   <% end %>
   <%= link_to "My Favorites", favorite_dresses_path %>
-
 </div>
 
 <!-- STYLES -->
@@ -214,7 +241,18 @@
     border-radius: 8px;
     border: 1px solid #d3c2aa;
   }
-
+.placeholder-img {
+  background: linear-gradient(45deg, #f0f0f0, #e8e8e8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-style: italic;
+  height: 250px;
+  border-radius: 8px;
+  border: 2px dashed #ccc;
+  margin-bottom: 10px;
+}
   .btn-view {
     display: inline-block;
     margin-top: 10px;

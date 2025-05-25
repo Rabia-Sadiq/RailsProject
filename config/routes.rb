@@ -19,13 +19,14 @@ resource :profile, only: [:show, :update]
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get 'question1', to:"undertone_quiz#q1"
-  get 'question2', to:"undertone_quiz#q2"
-  get 'question3', to:"undertone_quiz#q3"
-  get 'question4', to:"undertone_quiz#q4"
-  get 'question5', to:"undertone_quiz#q5"
-  get 'question6', to:"undertone_quiz#q6"
-  get 'question7', to:"undertone_quiz#q7"
+get 'q1', to: 'undertone_quiz#q1'
+get 'q2', to: 'undertone_quiz#q2'
+get 'q3', to: 'undertone_quiz#q3'
+get 'q4', to: 'undertone_quiz#q4'
+get 'q5', to: 'undertone_quiz#q5'
+get 'q6', to: 'undertone_quiz#q6'
+get 'q7', to: 'undertone_quiz#q7'
+
   post "undertone_quiz/answer", to: "undertone_quiz#answer"
   get 'users/favorites', to: 'users#favorites'
   get 'product', to: 'products#index'

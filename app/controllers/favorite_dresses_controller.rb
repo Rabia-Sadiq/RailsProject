@@ -21,9 +21,4 @@ class FavoriteDressesController < ApplicationController
   redirect_back fallback_location: favorite_dresses_path, alert: "Favorite dress not found."
  end
 
-
-
-
-
-
 end

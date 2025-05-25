@@ -27,16 +27,20 @@
 <div class="mb-6">
       <img src="/images/color.png" alt="Jewelry Choice" class="w-full rounded-lg shadow-md">
     </div>
-    <form action="question5.html" method="GET" class="space-y-4">
+<%= form_with url: undertone_quiz_answer_path, method: :post, class: "space-y-4" do |f| %>
+
+<%= hidden_field_tag :question_number, 4 %>
+
       <label class="block"><input type="radio" name="q4" value="Cool colors" class="mr-2"> Cool colors</label>
       <label class="block"><input type="radio" name="q4" value="Warm colors" class="mr-2"> Warm colors</label>
       <label class="block"><input type="radio" name="q4" value="Both suit me well" class="mr-2"> Both suit me well</label>
       <label class="block"><input type="radio" name="q4" value="Not sure" class="mr-2"> Not sure</label>
 
       <div class="mt-6 text-right">
-        <button type="submit" class="bg-yellow-700 text-white px-4 py-2 rounded-lg hover:bg-yellow-800">Next →</button>
+        <%= link_to "Next →", q5_path , class: "bg-yellow-700 text-white px-4 py-2 rounded-lg hover:bg-yellow-800 inline-block" %>
       </div>
-    </form>
+    <% end %>
+
   </div>
 </body>
 </html>

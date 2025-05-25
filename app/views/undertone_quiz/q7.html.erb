@@ -27,7 +27,10 @@
 <div class="mb-6">
       <img src="/images/white.png" alt="Jewelry Choice" class="w-full rounded-lg shadow-md">
     </div>
-<form action="palette.html" method="GET" class="space-y-4">
+<%= form_with url: undertone_quiz_answer_path, method: :post, class: "space-y-4" do |f| %>
+
+<%= hidden_field_tag :question_number, 7 %>
+
   <label class="block"><input type="radio" name="q7" value="Pure white" class="mr-2"> Pure white</label>
   <label class="block"><input type="radio" name="q7" value="Cream or off-white" class="mr-2"> Cream or off-white</label>
   <label class="block"><input type="radio" name="q7" value="Both look okay" class="mr-2"> Both look okay</label>
@@ -36,7 +39,8 @@
   <div class="mt-6 text-right">
     <button type="submit" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">Finish →</button>
   </div>
-</form>
+<% end %>
+
 
 
   </div>

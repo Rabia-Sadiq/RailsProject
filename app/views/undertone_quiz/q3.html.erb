@@ -32,7 +32,10 @@
     </div>
 
     <!-- Options -->
-    <form action="question4.html" method="GET" class="space-y-4">
+<%= form_with url: undertone_quiz_answer_path, method: :post, class: "space-y-4" do |f| %>
+
+<%= hidden_field_tag :question_number, 3 %>
+
       <label class="block">
         <input type="radio" name="q3" value="Silver" class="mr-2"> Silver
       </label>
@@ -47,9 +50,10 @@
       </label>
 
       <div class="mt-6 text-right">
-        <button type="submit" class="bg-yellow-700 text-white px-4 py-2 rounded-lg hover:bg-yellow-800">Next →</button>
+        <%= link_to "Next →", q4_path, class: "bg-yellow-700 text-white px-4 py-2 rounded-lg hover:bg-yellow-800 inline-block" %>
       </div>
-    </form>
+    <% end %>
+
   </div>
 </body>
 </html>

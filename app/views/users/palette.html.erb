@@ -38,7 +38,11 @@
     </nav>
   <div class="max-w-5xl mx-auto bg-white bg-opacity-80 border-4 border-yellow-800 rounded-xl shadow-lg p-10">
     <h1 class="text-3xl font-bold mb-4 text-center">Your Personalized Color Palette</h1>
-    <p class="text-lg text-center mb-6">Based on your <%= @undertone.capitalize %> undertone, these are the most flattering colors for you:</p>
+<% if @undertone.present? %>
+  <p class="text-lg text-center mb-6">Based on your <%= @undertone.capitalize %> undertone, these are the most flattering colors for you:</p>
+<% else %>
+  <p class="text-lg text-center mb-6 text-red-600">Undertone is not available. Please complete the quiz first.</p>
+<% end %>
 
     <div class="flex flex-wrap justify-center gap-6">
       <% @color_palette.each do |name, hex| %>
