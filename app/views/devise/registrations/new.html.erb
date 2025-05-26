@@ -1,195 +1,409 @@
-<section class="signup-section themed-container">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Color&Fit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .themed-container {
-      background-color: #f8f4e3;  /* Soft vintage cream */
-      border: 2px solid #d7c49e;  /* Warm beige border */
-      border-radius: 12px;
-      padding: 25px 30px;
-      width: 90%;
-      max-width: 1200px;
-      height: 100vh; /* Full viewport height */
-      margin: 0 auto;
-      font-family: 'Georgia', serif;
-      color: #5a4a24;
-      box-shadow: 3px 3px 12px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      box-sizing: border-box;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #f8b500 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    .signup-form {
-      flex: 1 1 60%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-right: 30px;
-    }
+        .signup-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
 
-    .signup-image {
-      flex: 1 1 40%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #fffaf0;
-      border-left: 2px solid #d7c49e;
-      border-radius: 0 12px 12px 0;
-      overflow: hidden;
-    }
+        .signup-form {
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .signup-image img {
-      max-width: 80%;
-      max-height: 80%;
-      border-radius: 50%;
-      border: 3px solid #d7c49e;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-    }
+        .logo {
+            color: #e91e63;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
 
-    .signup-section h2 {
-      text-align: center;
-      font-weight: bold;
-      font-size: 2em;
-      margin-bottom: 25px;
-      color: #7f5f1a;
-    }
+        .signup-form h2 {
+            color: #2c3e50;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
 
-    .field {
-      margin-bottom: 18px;
-      display: flex;
-      flex-direction: column;
-    }
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    label {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #6b522a;
-      font-size: 1.1em;
-    }
+        .form-group {
+            margin-bottom: 24px;
+        }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      padding: 10px 12px;
-      border: 1.8px solid #d7c49e;
-      border-radius: 6px;
-      font-size: 1em;
-      font-family: inherit;
-      transition: border-color 0.3s ease;
-      color: #4a3a10;
-    }
+        label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
 
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    input[type="password"]:focus {
-      border-color: #b38b4c;
-      outline: none;
-    }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e8ecef;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
 
-    em {
-      font-style: normal;
-      font-weight: 500;
-      color: #a68c43;
-      font-size: 0.9em;
-      margin-left: 6px;
-    }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #e91e63;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.1);
+        }
 
-    .actions {
-      margin-top: 25px;
-      text-align: center;
-    }
+        .password-hint {
+            color: #95a5a6;
+            font-size: 12px;
+            margin-top: 4px;
+        }
 
-    input[type="submit"] {
-      background-color: #b38b4c;
-      color: white;
-      font-weight: 700;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.15em;
-      transition: background-color 0.3s ease;
-      font-family: 'Georgia', serif;
-    }
+        .signup-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #e91e63, #ad1457);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
 
-    input[type="submit"]:hover {
-      background-color: #a07c3d;
-    }
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(233, 30, 99, 0.3);
+        }
 
-    #error_explanation {
-      background-color: #fce9b2;
-      border: 1.5px solid #d7c49e;
-      color: #7f5f1a;
-      padding: 12px 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      font-family: 'Georgia', serif;
-      font-weight: 600;
-    }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: #95a5a6;
+            font-size: 14px;
+        }
 
-    .devise-links {
-      text-align: center;
-      margin-top: 20px;
-      font-family: 'Georgia', serif;
-    }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e8ecef;
+        }
 
-    .devise-links a {
-      color: #7f5f1a;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        .divider span {
+            margin: 0 15px;
+        }
 
-    .devise-links a:hover {
-      text-decoration: underline;
-      color: #b38b4c;
-    }
-  </style>
+        .login-link {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
 
-  <div class="signup-form">
-    <h2>Sign up</h2>
+        .login-link a {
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+        .login-link a:hover {
+            text-decoration: underline;
+        }
 
-      <div class="field">
-        <%= f.label :name, "Full Name" %><br />
-        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-      </div>
+        .signup-image {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0, #fd79a8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
 
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autocomplete: "email" %>
-      </div>
+        .signup-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.05)"/><circle cx="40" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
 
-      <div class="field">
-        <%= f.label :password %>
-        <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
-        <%= f.password_field :password, autocomplete: "new-password" %>
-      </div>
+        .image-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
 
-      <div class="field">
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-      </div>
+        .illustration {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
 
-      <div class="actions">
-        <%= f.submit "Sign up" %>
-      </div>
-    <% end %>
+        .illustration img {
+            width: 70%;
+            height: 70%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
 
-    <div class="devise-links">
-      <%= render "devise/shared/links" %>
+        .welcome-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-subtext {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .signup-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .signup-image {
+                display: none;
+            }
+
+            .signup-form {
+                padding: 40px 30px;
+            }
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #ff7675, #e84393);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-form">
+            <div class="logo">Color&Fit</div>
+            
+            <h2>Create Account</h2>
+            <p class="subtitle">Join us and discover your perfect style</p>
+
+            <!-- Error messages would go here -->
+            <!-- <div class="error-message">
+                Please fix the following errors:
+                <ul style="margin: 8px 0 0 20px;">
+                    <li>Email has already been taken</li>
+                </ul>
+            </div> -->
+
+            <form>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" autocomplete="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="new-password" required>
+                    <div class="password-hint">Minimum 6 characters required</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" required>
+                </div>
+
+                <button type="submit" class="signup-btn">Create Account</button>
+            </form>
+
+            <div class="divider">
+                <span>Already have an account?</span>
+            </div>
+
+            <div class="login-link">
+                <a href="/login">Sign in here</a>
+            </div>
+        </div>
+
+        <div class="signup-image">
+            <div class="floating-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+            
+            <div class="image-content">
+                <div class="illustration">
+                    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Fashion illustration -->
+                        <circle cx="100" cy="100" r="80" fill="#e91e63" opacity="0.1"/>
+                        <circle cx="90" cy="90" r="25" fill="#e91e63" opacity="0.3"/>
+                        <circle cx="120" cy="110" r="20" fill="#ffa726" opacity="0.4"/>
+                        <circle cx="80" cy="130" r="15" fill="#42a5f5" opacity="0.3"/>
+                        <path d="M60 100 Q100 60 140 100 Q100 140 60 100" fill="#e91e63" opacity="0.2"/>
+                        <rect x="85" y="140" width="30" height="40" rx="15" fill="#e91e63" opacity="0.4"/>
+                    </svg>
+                </div>
+                
+                <div class="welcome-text">Welcome to Color&Fit!</div>
+                <div class="welcome-subtext">
+                    Discover your perfect colors and fit with our AI-powered fashion stylist
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="signup-image">
-    <img src="/images/signup.png" alt="Sign up illustration">
-  </div>
-</section>
+    <script>
+        // Add smooth interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Form validation
+            const form = document.querySelector('form');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('password_confirmation');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                
+                if (passwordInput.value.length < 6) {
+                    alert('Password must be at least 6 characters long!');
+                    return;
+                }
+                
+                // Here you would typically submit the form to your Rails backend
+                alert('Account created successfully! (This is a demo)');
+            });
+        });
+    </script>
+</body>
+</html>
