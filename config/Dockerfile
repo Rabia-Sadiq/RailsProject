@@ -1,27 +1,30 @@
 FROM ruby:3.2.8
 
-# Install dependencies needed for pg gem and general build
+# Install system dependencies
 RUN apt-get update -qq && apt-get install -y \
-    libpq-dev \
     build-essential \
+    libpq-dev \
     nodejs \
+    npm \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /myapp
 
-# Copy gemfiles
+# Copy Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
 
-# Install gems
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+# Configure bundle and install gems
+RUN bundle config set --local deployment true && \
+    bundle config set --local without 'development test' && \
+    bundle lock --add-platform x86_64-linux && \
+    bundle install --jobs=4 --retry=3
 
-# Copy application code
+# Copy the rest of the application
 COPY . .
 
 # Expose port
 EXPOSE 3000
 
-# Start the server
+# Start the Rails server
 CMD ["rails", "server", "-b", "0.0.0.0"]
