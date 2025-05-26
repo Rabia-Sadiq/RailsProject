@@ -1,30 +1,43 @@
-FROM ruby:3.3.0
+FROM ruby:3.3.7-slim
 
 # Install system dependencies
-RUN apt-get update -qq && apt-get install -y \
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
     build-essential \
+    curl \
+    git \
     libpq-dev \
+    libvips \
     nodejs \
     npm \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    pkg-config \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-WORKDIR /myapp
+WORKDIR /rails
 
-# Copy Gemfile and Gemfile.lock
+# Set environment
+ENV RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development"
+
+# Copy Gemfiles
 COPY Gemfile Gemfile.lock ./
 
-# Configure bundle and install gems
-RUN bundle config set --local deployment true && \
-    bundle config set --local without 'development test' && \
-    bundle lock --add-platform x86_64-linux && \
-    bundle install --jobs=4 --retry=3
+# Install gems (without bootsnap precompile)
+RUN bundle lock --add-platform x86_64-linux && \
+    bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
-# Copy the rest of the application
+# Copy application
 COPY . .
 
-# Expose port
+# Make binfiles executable
+RUN chmod +x bin/*
+
+# Precompile assets
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
 EXPOSE 3000
 
-# Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
