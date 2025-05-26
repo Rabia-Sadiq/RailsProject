@@ -64,5 +64,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
+# Production gems
+group :production do
+  gem 'pg' # PostgreSQL
+  gem 'rails_12factor' # Better logging and static assets
+end
 gem "tailwindcss-rails", "~> 4.2"
