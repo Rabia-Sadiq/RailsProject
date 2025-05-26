@@ -1,4 +1,4 @@
-FROM ruby:3.2.8
+FROM ruby:3.3.0
 
 # Install system dependencies
 RUN apt-get update -qq && apt-get install -y \
