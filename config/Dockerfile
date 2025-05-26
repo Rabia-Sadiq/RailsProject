@@ -1,31 +1,28 @@
 FROM ruby:3.3.0
 
-# Install system dependencies including PostgreSQL development libraries
+# Install nodejs, yarn, postgresql-client and dependencies for pg gem compilation
 RUN apt-get update -qq && apt-get install -y \
-    build-essential \
-    postgresql-client \
-    libpq-dev \
-    nodejs \
-    npm \
-    && rm -rf /var/lib/apt/lists/*
+  nodejs \
+  yarn \
+  postgresql-client \
+  libpq-dev \
+  build-essential \
+  && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /app
+WORKDIR /myapp
 
-# Copy Gemfile and Gemfile.lock
+# Copy Gemfiles
 COPY Gemfile Gemfile.lock ./
 
-# Install Ruby gems
+# Install gems including pg
 RUN bundle install
 
-# Copy the rest of the application
+# Copy the rest of your app
 COPY . .
 
-# Precompile assets (if you have assets)
-RUN bundle exec rails assets:precompile
+# Precompile bootsnap cache (optional, as you had in your original Dockerfile)
+RUN bundle exec bootsnap precompile --gemfile
 
-# Expose port 3000
-EXPOSE 3000
-
-# Start the Rails server
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+# Command to run your server
+CMD ["rails", "server", "-b", "0.0.0.0"]
